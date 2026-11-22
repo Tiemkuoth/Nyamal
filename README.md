@@ -1,73 +1,88 @@
 <div align="center">
 
-# NYAMAL × NAATH HERITAGE
+<img src="assets/nyamal-naath-banner.svg" alt="Nyamal AI and Naath Heritage secure integration" width="100%">
+
+# Nyamal × Naath Heritage
 
 ### Secure Editorial Draft Bridge
 
 **AI-assisted content delivery. Human-controlled publishing.**
 
-[![PHP](https://img.shields.io/badge/PHP-8.0%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
-[![MySQL](https://img.shields.io/badge/MySQL-5.7%2B%20%7C%208.0-4479A1?logo=mysql&logoColor=white)](#requirements)
-[![HTTPS](https://img.shields.io/badge/Transport-HTTPS%20required-15803d)](#security)
-[![Draft Only](https://img.shields.io/badge/Publishing-DRAFT%20ONLY-d97706)](#editorial-safety)
+[![PHP](https://img.shields.io/badge/PHP-8%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-Compatible-4479A1?logo=mysql&logoColor=white)](#requirements)
+[![HTTPS](https://img.shields.io/badge/HTTPS-Required-15803d)](#security)
+[![REST API](https://img.shields.io/badge/API-REST-2563eb)](#api)
+[![Draft Only](https://img.shields.io/badge/PUBLISHING-DRAFT_ONLY-d97706)](#editorial-safety)
 
-*A small, isolated API that lets Nyamal submit stories to a private Naath Heritage review inbox — without touching the website's existing publishing tables.*
+*A secure bridge that sends Nyamal-created stories into a private Naath Heritage inbox for review.*
 
 </div>
 
 ---
 
-## ✦ At a glance
-
-| | |
-|---|---|
-| **Source** | Nyamal AI |
-| **Destination** | Naath Heritage editorial inbox |
-| **Transport** | HTTPS · JSON · REST |
-| **Storage** | Separate MySQL table: `nyamal_content_inbox` |
-| **Submission state** | `pending_review` — enforced by server |
-| **Public publishing** | **Not supported by this connector** |
+<table>
+<tr>
+<td align="center" width="25%"><strong>✍️ Source</strong><br>Nyamal AI</td>
+<td align="center" width="25%"><strong>🌐 Destination</strong><br>Naath Heritage</td>
+<td align="center" width="25%"><strong>🗄️ Storage</strong><br>Isolated MySQL inbox</td>
+<td align="center" width="25%"><strong>🛡️ Publishing</strong><br>Human approval</td>
+</tr>
+</table>
 
 > [!IMPORTANT]
-> **Nothing is published automatically.** Every submission lands in the isolated inbox as `pending_review`. An editor must review it and use the website's existing publishing process. This connector does not modify existing news or history tables.
+> **Draft-only by design.** This connector does not publish to the public website. Every accepted submission is server-enforced as `pending_review`. Existing Naath Heritage news, history, user, and settings tables are not modified.
 
-## Workflow
+## ✨ How It Works
 
 ```mermaid
 flowchart LR
-    A["Nyamal AI<br/>Create content"] -->|HTTPS · Bearer token| B["Naath Heritage API<br/>Authenticate & validate"]
-    B --> C[("Isolated MySQL inbox")]
-    C --> D["Pending editorial review"]
-    D --> E["Human editor"]
-    E -->|Existing website workflow| F["Publish manually, if approved"]
+    A["🤖 Nyamal AI<br/>Create content"] -->|"HTTPS · Bearer token"| B["🔐 Secure API<br/>Authenticate & validate"]
+    B --> C[("🗄️ Isolated Inbox<br/>MySQL")]
+    C --> D["📝 Pending Review"]
+    D --> E["👤 Human Editor"]
+    E -->|"Existing website workflow"| F["✅ Publish manually<br/>if approved"]
 ```
 
-## What's included
+## 📦 What's Included
 
-| File | Purpose |
-|---|---|
-| `nyamal-api.php` | Authenticated, draft-only submission endpoint |
-| `nyamal-api-config.example.php` | Configuration template — safe to commit |
-| `create_inbox_table.sql` | Creates the isolated inbox table only |
-| `.htaccess` | Optional Apache HTTPS redirect and config-file protection |
-| `INSTALL.md` | Step-by-step deployment checklist |
-| `SECURITY.md` | Security notes and incident checklist |
+<table>
+<tr>
+<td width="50%">
 
-## Quick setup
+**Connector & Database**
+- `nyamal-api.php` — authenticated endpoint
+- `create_inbox_table.sql` — isolated inbox table
+- `nyamal-api-config.example.php` — safe config template
+- `.htaccess` — optional Apache protection
 
-1. **Back up** your Naath Heritage database.
-2. In phpMyAdmin, select the correct database and run [`create_inbox_table.sql`](create_inbox_table.sql).
-3. Upload `nyamal-api.php` into a folder on your site, for example `/api/`.
-4. Copy `nyamal-api-config.example.php` to `nyamal-api-config.php` beside the endpoint. Fill in database credentials and a unique random token.
-5. Configure HTTPS and confirm the private config file cannot be downloaded.
-6. In Nyamal, create a **Naath Heritage REST API** integration. Set the URL, POST method, Bearer token, and `force_draft: true`.
-7. Send a test draft. Confirm it appears in the inbox with `pending_review`.
+</td>
+<td width="50%">
 
-Read the complete [Installation Guide](INSTALL.md) before deploying.
+**Documentation**
+- `INSTALL.md` — deployment walkthrough
+- `SECURITY.md` — security checklist
+- `.gitignore` — excludes secret configuration
 
-## API endpoint
+</td>
+</tr>
+</table>
 
-Example URL (change to match your deployment):
+## 🚀 Installation
+
+<table>
+<tr><td align="center"><strong>01</strong></td><td><strong>Back up</strong><br>Export a full Naath Heritage database backup from phpMyAdmin.</td></tr>
+<tr><td align="center"><strong>02</strong></td><td><strong>Create inbox</strong><br>Run <code>create_inbox_table.sql</code> in the correct database. Only the new inbox table is created.</td></tr>
+<tr><td align="center"><strong>03</strong></td><td><strong>Upload API</strong><br>Upload <code>nyamal-api.php</code> to your website API folder.</td></tr>
+<tr><td align="center"><strong>04</strong></td><td><strong>Configure secrets</strong><br>Copy the example config to <code>nyamal-api-config.php</code> and add your database credentials and long random token.</td></tr>
+<tr><td align="center"><strong>05</strong></td><td><strong>Connect Nyamal</strong><br>Add the Naath Heritage REST API integration with POST, Bearer token, and <code>force_draft: true</code>.</td></tr>
+<tr><td align="center"><strong>06</strong></td><td><strong>Test submission</strong><br>Send a test draft and verify its status is <code>pending_review</code>.</td></tr>
+</table>
+
+➡️ **[Read the full installation guide](INSTALL.md)**
+
+## 🔌 API
+
+**Example endpoint** — change this URL if your hosting path differs:
 
 ```text
 https://naath.site.je/api/nyamal-api.php
@@ -75,13 +90,14 @@ https://naath.site.je/api/nyamal-api.php
 
 ### Request
 
-`POST` with `Content-Type: application/json` and:
+`POST` · `Content-Type: application/json`
 
 ```http
 Authorization: Bearer YOUR_LONG_RANDOM_TOKEN
 ```
 
-Example body:
+<details>
+<summary><strong>Example JSON payload</strong></summary>
 
 ```json
 {
@@ -99,7 +115,9 @@ Example body:
 
 Only `title` and `content` are required. URL fields must be valid HTTPS URLs.
 
-### Success response
+</details>
+
+### Response · `201 Created`
 
 ```json
 {
@@ -110,45 +128,47 @@ Only `title` and `content` are required. URL fields must be valid HTTPS URLs.
 }
 ```
 
-## Editorial safety
+## 🛡️ Security
 
-- The API **always** assigns `pending_review`.
-- A request cannot change the status to `published`.
-- No public news or history table is read or written.
-- The connector creates one new inbox table only.
-- Publishing, if approved, is a separate manual step in the existing CMS.
+| Protection | Implementation |
+|---|---|
+| Transport | HTTPS required |
+| Authentication | Bearer token |
+| Methods | POST only |
+| Payload | JSON validation + size limit |
+| Database | PDO prepared statements |
+| URLs | HTTPS validation |
+| Publishing | Server forces `pending_review` |
+| Data scope | Isolated inbox table only |
 
-## Security baseline
+➡️ **[Read security details](SECURITY.md)**
 
-- HTTPS required.
-- Bearer-token authentication; token comparison uses `hash_equals`.
-- POST-only; JSON-only.
-- Request body size limit.
-- Prepared statements.
-- Input validation and URL validation.
-- Config file excluded from Git.
-- Rotate the token immediately if exposed.
+## 🧭 Editorial Safety
 
-See [`SECURITY.md`](SECURITY.md).
+- Nyamal can **submit** content drafts.
+- Nyamal cannot **publish** content.
+- API requests cannot override the review status.
+- Existing public content is not modified.
+- An editor must review and publish using the existing website workflow.
 
-## Requirements
+## ⚙️ Requirements
 
-- PHP 8.0 or newer with PDO MySQL.
-- MySQL 5.7+ / MySQL 8 compatible table support (InnoDB).
-- HTTPS configured on the host.
-- A database account limited to the needed database/table privileges.
+- PHP 8+ with PDO MySQL extension
+- MySQL-compatible database
+- HTTPS enabled
+- Database account with appropriate limited privileges
 
-## Status
+## 📌 Deployment Note
 
-This is a **standalone connector**. Connecting the inbox to the actual Naath Heritage admin dashboard or existing editorial workflow requires a separate implementation against that site's real PHP code and schema.
+This is a standalone connector. Displaying inbox items inside the Naath Heritage admin dashboard or integrating with its existing news publishing workflow requires a separate change based on the site's actual PHP code and database schema.
 
 ---
 
 <div align="center">
 
-**Built for responsible automation.**  
-**Designed for editorial control.**  
-**Protected by human review.**
+### Built for responsible automation.
+
+**Designed for editorial control · Protected by human review**
 
 *Nyamal AI × Naath Heritage*
 
