@@ -1,0 +1,2009 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071225">
+  <title>Nyamal AI · Operations Center</title>
+  <style>
+    :root{color-scheme:dark;--bg:#071225;--panel:#0d1b32;--card:#112440;--card-2:#142b4b;--line:#223a5c;--text:#f4f7ff;--muted:#91a4c2;--blue:#3478f6;--purple:#8b5cf6;--green:#10b981;--amber:#f59e0b;--red:#ef4444;--shadow:0 18px 55px #02081766;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -20%,#193360 0,transparent 38%),var(--bg);color:var(--text);min-height:100vh}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #78a5ff;outline-offset:2px}a{color:#8bb4ff}.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:12px}.eyebrow{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#9bb2d5;font-weight:750}.kicker{color:#8fa4c4;font-size:13px;margin:6px 0 0}
+    .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}.login{width:min(100%,420px);background:#0d1b32ee;border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:var(--shadow)}.login-brand{display:flex;align-items:center;gap:12px;margin-bottom:26px}.brand-mark{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#743cf1,#2469f4);font-size:22px;box-shadow:0 8px 26px #543fe966}.login h1{font-size:25px;margin:0}.login p{color:var(--muted)}.field{display:block;width:100%;margin:7px 0 16px;padding:11px 13px;color:var(--text);background:#08162a;border:1px solid #2b4263;border-radius:10px}.field::placeholder{color:#7085a7}.btn{border:1px solid transparent;border-radius:9px;padding:10px 14px;background:linear-gradient(110deg,#2868ec,#7251ed);color:white;font-weight:700;transition:filter .15s,transform .15s}.btn:hover{filter:brightness(1.13);transform:translateY(-1px)}.btn:disabled{opacity:.55;cursor:wait;transform:none}.btn.secondary{background:#172d4c;border-color:#2c466b;color:#d9e7ff}.btn.ghost{background:transparent;border-color:#344b6c;color:#c9d8ef}.btn.danger{background:#45232e;border-color:#71303f;color:#ffd9df}.btn.small-btn{padding:7px 10px;font-size:12px}.link-btn{border:0;background:none;color:#9bbcff;padding:8px 0}
+    .profile-photo{width:44px;height:44px;border-radius:14px;object-fit:cover;border:1px solid #526b96;box-shadow:0 8px 26px #543fe966}.brand-image{object-fit:contain;background:var(--card-2);padding:3px}.profile-photo.avatar-photo{width:34px;height:34px;border-radius:11px}.profile-preview{width:96px;height:96px;border-radius:22px;object-fit:contain;padding:7px;border:1px solid #526b96;background:var(--card-2)}.profile-upload-row{display:flex;align-items:center;gap:14px}.profile-preview-fallback{width:96px;height:96px;font-size:32px;flex:none}
+    .app{min-height:100vh;display:grid;grid-template-columns:244px minmax(0,1fr)}.sidebar{height:100vh;position:sticky;top:0;background:#08152aee;border-right:1px solid #1b3150;padding:20px 14px;display:flex;flex-direction:column;z-index:5;backdrop-filter:blur(16px)}.brand{display:flex;align-items:center;gap:11px;padding:3px 9px 22px}.brand-copy{font-size:15px;font-weight:800;letter-spacing:.01em}.brand-copy small{display:block;color:#89a0c2;font-size:10px;font-weight:550;margin-top:3px}.nav-label{padding:8px 10px 5px;color:#667d9f;font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:750}.nav{display:grid;gap:4px}.nav button{display:flex;align-items:center;gap:11px;width:100%;padding:10px 11px;text-align:left;color:#a8bad4;border:1px solid transparent;border-radius:10px;background:transparent;font-size:13px;font-weight:600}.nav button:hover{background:#132744;color:#edf4ff}.nav button.active{background:linear-gradient(100deg,#1d55aa77,#6441ba55);border-color:#3b68bc66;color:#fff;box-shadow:inset 3px 0 #6696ff}.nav-icon{width:19px;text-align:center;color:#8daeff;font-size:16px}.nav-badge{margin-left:auto;background:#bb354d;color:white;border-radius:99px;padding:2px 6px;font-size:10px}.sidebar-bottom{margin-top:auto;border-top:1px solid #1b3150;padding-top:14px}.admin-mini{display:flex;align-items:center;gap:10px;padding:8px 9px}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#8159f5,#2077de);font-weight:800}.admin-mini strong{font-size:12px}.admin-mini small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+    .main{min-width:0;padding:0 30px 38px}.topbar{min-height:76px;border-bottom:1px solid #1b3150;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:27px}.top-left,.top-right{display:flex;align-items:center;gap:12px;min-width:0}.mobile-toggle{display:none}.search{width:min(33vw,340px);padding:10px 13px;background:#0d1b32;border:1px solid #263d5e;border-radius:10px;color:var(--text)}.status{display:inline-flex;align-items:center;gap:7px;border:1px solid #1e5c4d;background:#0c332d77;border-radius:99px;padding:7px 11px;color:#77e2ba;font-size:11px;font-weight:750}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #10b981}.icon-btn{position:relative;width:38px;height:38px;border:1px solid #293f5d;border-radius:10px;background:#0d1b32;color:#dce8f8}.notification-count{position:absolute;top:-5px;right:-5px;background:#e8495c;color:white;border-radius:99px;padding:2px 5px;font-size:9px}
+    .page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px}.page-head h1{font-size:27px;letter-spacing:-.03em;margin:4px 0 0}.page-actions{display:flex;gap:8px;flex-wrap:wrap}.content{max-width:1480px;margin:auto}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{background:linear-gradient(145deg,#112440,#0d1b32);border:1px solid #203959;border-radius:15px;padding:18px;box-shadow:0 7px 24px #02081722;min-width:0}.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}.card h2{font-size:15px;margin:0}.card h3{font-size:13px;margin:0}.metric{font-size:30px;font-weight:800;letter-spacing:-.04em;margin-top:12px}.metric-label{color:var(--muted);font-size:12px}.metric-foot{font-size:11px;color:#a5b8d5;margin-top:9px}.metric-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:#2d5caa45;color:#95b9ff;font-size:17px}.section{margin-top:16px}.split{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:15px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;color:#8298b8;text-transform:uppercase;letter-spacing:.09em;font-size:10px;font-weight:700}td,th{padding:11px 9px;border-bottom:1px solid #203653;vertical-align:middle}tbody tr:last-child td{border-bottom:0}td{color:#d5e0f0}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:4px 8px;background:#1a3352;color:#bfd6ff;font-size:10px;font-weight:750}.pill.green{background:#10372f;color:#7fe0bb}.pill.yellow{background:#45371a;color:#f8cc77}.pill.red{background:#48252d;color:#ff9eaa}.stack{display:grid;gap:10px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1;min-width:150px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}.form-grid .wide{grid-column:1/-1}.field-label{font-size:11px;color:#b9c9df;font-weight:650}.hint{font-size:11px;color:#8298b8;line-height:1.55}.notice{border:1px solid #394e70;background:#112745;border-radius:11px;padding:12px 14px;color:#b9cbe4;font-size:12px;line-height:1.55}.notice.warning{border-color:#73561e;background:#352b16;color:#f5d58c}.notice.success{border-color:#1d614c;background:#103329;color:#9ce7c5}.empty{padding:26px;border:1px dashed #304b70;border-radius:12px;color:#91a4c2;text-align:center;font-size:13px}.list{display:grid;gap:9px}.list-item{display:flex;align-items:center;gap:11px;padding:11px;background:#0c1a2e;border:1px solid #1e3554;border-radius:11px;min-width:0}.list-item-main{min-width:0;flex:1}.list-item-main strong{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.list-item-main small{display:block;color:#8499b8;font-size:10px;margin-top:4px}.list-actions{display:flex;gap:6px;flex-wrap:wrap}.progress{height:7px;background:#1b3150;border-radius:20px;overflow:hidden}.progress span{display:block;height:100%;background:linear-gradient(90deg,#2c79f6,#9664f3);border-radius:20px}.chart{display:flex;gap:8px;align-items:flex-end;height:125px;padding-top:14px}.bar-col{flex:1;display:grid;gap:6px;justify-items:center;min-width:0}.bar{width:min(100%,30px);min-height:4px;background:linear-gradient(0deg,#355fed,#9a5df0);border-radius:6px 6px 2px 2px}.bar-label{font-size:9px;color:#8298b8;white-space:nowrap}.chat-list{height:min(53vh,490px);overflow:auto;display:flex;flex-direction:column;gap:10px;padding:7px}.bubble{max-width:min(82%,720px);padding:11px 14px;border:1px solid #2a4262;background:#142b49;border-radius:13px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.55}.bubble.user{align-self:flex-end;background:linear-gradient(135deg,#174a96,#393782);border-color:#5263bb}.bubble.assistant{align-self:flex-start}.chat-time{display:block;color:#91a4c2;font-size:9px;margin-top:7px}.chat-composer{display:flex;gap:9px;margin-top:13px}.chat-composer textarea{resize:vertical;min-height:46px;max-height:160px;margin:0;flex:1}.content-card{display:flex;flex-direction:column;gap:10px}.content-card p{color:#b4c3d8;font-size:12px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}.content-card .list-actions{margin-top:auto}.footer-note{margin-top:16px;color:#7086a8;font-size:10px;text-align:center}
+    @media(max-width:1100px){.app{grid-template-columns:215px minmax(0,1fr)}.sidebar{padding:16px 10px}.main{padding:0 20px 32px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}}
+    @media(max-width:740px){.app{grid-template-columns:1fr}.sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;transform:translateX(-105%);transition:transform .2s ease;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.mobile-toggle{display:inline-grid;place-items:center}.main{padding:0 14px 28px}.topbar{min-height:62px;margin-bottom:20px}.search{width:min(46vw,230px)}.status{display:none}.top-left{gap:8px}.grid,.grid.two,.grid.three{grid-template-columns:1fr}.page-head{align-items:flex-start;flex-direction:column}.page-head h1{font-size:23px}.top-right{gap:7px}.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.chat-list{height:55vh}.bubble{max-width:95%}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+    :root{color-scheme:dark;--bg:#0b1120;--panel:#0f172a;--card:#131f33;--card-2:#192943;--line:#263a56;--text:#f1f5f9;--muted:#a1aec1;--blue:#6366f1;--purple:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--shadow:0 20px 60px #02061755;font-size:15px}
+    :root[data-theme="light"]{color-scheme:light;--bg:#f4f7fb;--panel:#ffffff;--card:#ffffff;--card-2:#f8faff;--line:#dbe3ee;--text:#172033;--muted:#66748a;--blue:#4f46e5;--purple:#2563eb;--green:#15803d;--amber:#b45309;--red:#dc2626;--shadow:0 14px 34px #16254412}
+    body{background:var(--bg);color:var(--text);font-size:15px;line-height:1.55}
+    button,input,textarea,select{font-size:inherit}
+    a{color:var(--blue)}
+    .app{grid-template-columns:248px minmax(0,1fr);background:var(--bg)}
+    .sidebar{background:var(--panel);border-right:1px solid var(--line);padding:22px 14px 16px;overflow-y:auto}
+    .brand{padding:2px 10px 24px}
+    .brand-copy{font-size:16px}
+    .brand-copy small{font-size:11px;color:var(--muted)}
+    .nav-label{padding:18px 12px 7px;color:var(--muted);font-size:11px}
+    .nav{gap:5px}
+    .nav button{min-height:44px;padding:10px 12px;gap:12px;border-radius:10px;color:var(--muted);font-size:14px}
+    .nav button:hover{background:var(--card-2);color:var(--text)}
+    .nav button.active{background:#6366f11a;border-color:#6366f133;color:var(--text);box-shadow:inset 3px 0 var(--blue)}
+    .nav-icon{flex:0 0 20px;color:var(--blue);font-size:17px}
+    .collapse-toggle{display:flex;align-items:center;gap:12px;width:100%;min-height:40px;padding:8px 12px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--muted);text-align:left;font-size:13px}
+    .collapse-toggle:hover{background:var(--card-2);color:var(--text)}
+    .sidebar-bottom{border-color:var(--line)}
+    .profile-menu{position:relative}
+    .profile-menu summary{list-style:none;cursor:pointer;border-radius:10px}
+    .profile-menu summary::-webkit-details-marker{display:none}
+    .profile-menu summary:hover{background:var(--card-2)}
+    .admin-mini strong{font-size:13px}
+    .admin-mini small{font-size:11px;color:var(--muted)}
+    .profile-copy{min-width:0;flex:1}
+    .profile-chevron{color:var(--muted)}
+    .profile-menu-pop{position:absolute;left:0;right:0;bottom:calc(100% + 8px);padding:6px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--shadow);z-index:10}
+    .profile-menu-pop button{display:block;width:100%;padding:10px 11px;border:0;border-radius:8px;background:transparent;color:var(--text);text-align:left;font-size:13px}
+    .profile-menu-pop button:hover{background:var(--card-2)}
+    .profile-menu-pop .profile-signout{color:var(--red)}
+    .main{padding:0 clamp(20px,3vw,42px) 42px}
+    .topbar{min-height:68px;margin-bottom:28px;border-color:var(--line)}
+    .search{width:min(34vw,420px);padding:10px 14px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--text);font-size:14px}
+    .search::placeholder{color:var(--muted)}
+    .status{padding:7px 11px;border-color:#22c55e40;background:#22c55e12;color:var(--green);font-size:12px}
+    .icon-btn{width:42px;height:42px;border-color:var(--line);background:var(--panel);color:var(--text);font-size:17px}
+    .content{max-width:1560px;margin:0 auto}
+    .page-head{align-items:center;margin-bottom:26px}
+    .eyebrow{font-size:11px;color:var(--blue)}
+    .page-head h1{font-size:30px;font-weight:750;letter-spacing:-.04em}
+    .kicker{max-width:760px;margin-top:7px;color:var(--muted);font-size:15px}
+    .page-actions{align-items:center}
+    .grid{gap:18px}
+    .grid.two,.grid.three{gap:18px}
+    .card{padding:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:none}
+    .card-head{margin-bottom:18px}
+    .card h2{font-size:18px;letter-spacing:-.02em}
+    .card h3{font-size:15px}
+    .metric-label{font-size:13px;color:var(--muted)}
+    .metric{margin-top:12px;font-size:36px;line-height:1.1}
+    .metric-foot{font-size:13px;color:var(--muted)}
+    .section{margin-top:22px}
+    .split{grid-template-columns:minmax(0,1.35fr) minmax(320px,.9fr);gap:18px}
+    .field{min-height:46px;margin:8px 0 16px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font-size:14px}
+    textarea.field{min-height:120px}
+    .field-label{font-size:13px;color:var(--text);font-weight:650}
+    .check-row{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--text);font-size:13px}
+    .check-row input{width:auto;margin:0}
+    .welcome-preview{min-height:64px;white-space:pre-wrap;overflow-wrap:anywhere}
+    .hint{font-size:13px;color:var(--muted);line-height:1.65}
+    .small{font-size:13px}
+    .btn{min-height:42px;padding:10px 16px;border-radius:10px;background:var(--blue);font-size:14px}
+    .btn:hover{filter:brightness(1.08)}
+    .btn.secondary{border-color:var(--line);background:var(--card-2);color:var(--text)}
+    .btn.ghost{border-color:var(--line);color:var(--text)}
+    .btn.danger{background:#ef44441a;border-color:#ef44444d;color:var(--red)}
+    .btn.small-btn{min-height:36px;padding:7px 11px;font-size:13px}
+    .link-btn{font-size:14px}
+    .notice{border-color:var(--line);background:var(--card-2);color:var(--text);font-size:14px}
+    .notice.warning{border-color:#f59e0b55;background:#f59e0b12;color:var(--amber)}
+    .notice.success{border-color:#22c55e55;background:#22c55e12;color:var(--green)}
+    .list{gap:10px}
+    .list-item{min-height:64px;padding:14px 15px;border-color:var(--line);border-radius:12px;background:var(--panel)}
+    .list-item-main strong{font-size:14px;color:var(--text)}
+    .list-item-main small{margin-top:5px;color:var(--muted);font-size:12px;white-space:normal;line-height:1.45}
+    .list-actions{gap:8px}
+    .pill{padding:5px 10px;background:var(--card-2);color:var(--text);font-size:12px}
+    .pill.green{background:#22c55e18;color:var(--green)}
+    .pill.yellow{background:#f59e0b18;color:var(--amber)}
+    .pill.red{background:#ef444418;color:var(--red)}
+    .empty{padding:34px 22px;border-color:var(--line);color:var(--muted);font-size:14px}
+    .table-wrap{border:1px solid var(--line);border-radius:12px}
+    table{font-size:13px}
+    th{font-size:11px}
+    td,th{padding:14px 12px;border-color:var(--line)}
+    td{color:var(--text)}
+    .chart{height:180px;padding:18px 10px 8px;border-radius:12px;background:var(--panel)}
+    .bar{width:min(100%,36px);background:linear-gradient(0deg,var(--blue),#8b5cf6);border-radius:7px 7px 3px 3px}
+    .bar-label{font-size:11px;color:var(--muted)}
+    .chat-list{height:min(56vh,620px);padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+    .bubble{font-size:14px}
+    .chat-time{font-size:11px}
+    .content-card{gap:14px}
+    .content-card p{font-size:14px;line-height:1.65}
+    .footer-note{margin-top:30px;color:var(--muted);font-size:12px}
+    .login{background:var(--panel);border-color:var(--line);border-radius:20px}
+    .login .field{background:var(--bg)}
+    .login-brand .brand-image,.login-brand .brand-mark{width:64px;height:64px;font-size:30px}
+    .login-brand .brand-image{padding:5px}
+    .app.sidebar-collapsed{grid-template-columns:78px minmax(0,1fr)}
+    .sidebar-collapsed .sidebar{padding-right:10px;padding-left:10px}
+    .sidebar-collapsed .brand{justify-content:center;padding-right:0;padding-left:0}
+    .sidebar-collapsed .brand-copy,.sidebar-collapsed .nav-label,.sidebar-collapsed .nav-text,.sidebar-collapsed .profile-copy,.sidebar-collapsed .profile-chevron{display:none}
+    .sidebar-collapsed .collapse-toggle,.sidebar-collapsed .nav button,.sidebar-collapsed .admin-mini{justify-content:center;padding-right:8px;padding-left:8px}
+    .sidebar-collapsed .nav button{position:relative}
+    .sidebar-collapsed .nav-badge{position:absolute;top:2px;right:2px;margin:0}
+    .sidebar-collapsed .profile-menu-pop{left:58px;right:auto;bottom:0;width:180px}
+    :root[data-theme="light"] body{background:var(--bg)}
+    :root[data-theme="light"] .sidebar{background:var(--panel)}
+    :root[data-theme="light"] .nav button:hover,:root[data-theme="light"] .profile-menu-pop button:hover{background:#edf1f8}
+    :root[data-theme="light"] .nav button.active{background:#4f46e510;border-color:#4f46e533}
+    :root[data-theme="light"] .field,:root[data-theme="light"] .search,:root[data-theme="light"] .chat-list,:root[data-theme="light"] .list-item,:root[data-theme="light"] .chart{background:#f8faff}
+    :root[data-theme="light"] .btn.secondary{background:#f2f5fa}
+    @media(max-width:1100px){.app{grid-template-columns:220px minmax(0,1fr)}.app.sidebar-collapsed{grid-template-columns:74px minmax(0,1fr)}.split{grid-template-columns:1fr}.main{padding-right:22px;padding-left:22px}}
+    @media(max-width:740px){.app,.app.sidebar-collapsed{grid-template-columns:1fr}.sidebar{width:270px;padding:20px 14px}.sidebar-collapsed .sidebar{padding:20px 14px}.sidebar-collapsed .brand{justify-content:flex-start;padding:2px 10px 24px}.sidebar-collapsed .brand-copy,.sidebar-collapsed .nav-label,.sidebar-collapsed .nav-text,.sidebar-collapsed .profile-copy,.sidebar-collapsed .profile-chevron{display:initial}.sidebar-collapsed .nav button{justify-content:flex-start;padding:10px 12px}.collapse-toggle{display:none}.main{padding:0 16px 30px}.topbar{margin-bottom:22px}.page-head{align-items:flex-start}.page-head h1{font-size:26px}.card{padding:18px}.grid,.grid.two,.grid.three{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.chat-list{height:55vh}.table-wrap{overflow:visible;border:0}table,thead,tbody,tr,th,td{display:block}thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}tbody tr{margin:0 0 12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}td{display:grid;grid-template-columns:minmax(100px,.7fr) minmax(0,1.3fr);gap:12px;padding:8px 4px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}td::before{content:attr(data-label);font-size:11px;color:var(--muted);font-weight:700}tbody tr:last-child td{border-bottom:1px solid var(--line)}tbody tr td:last-child{border-bottom:0}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+    .dashboard-welcome{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,30%);align-items:center;gap:24px;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+    .dashboard-welcome-copy{display:grid;gap:14px}
+    .dashboard-welcome h2{margin:5px 0;font-size:26px;letter-spacing:-.03em}
+    .dashboard-welcome p{margin:0;color:var(--muted);font-size:14px}
+    .dashboard-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .dashboard-welcome-image{display:block;width:min(100%,240px);aspect-ratio:1;justify-self:end;object-fit:cover;border:1px solid var(--line);border-radius:14px}
+    .dashboard-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .settings-control-center{display:grid;gap:18px}
+    .settings-overview{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:22px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(120deg,var(--card),var(--card-2))}
+    .settings-overview h2{margin:4px 0;font-size:22px}
+    .settings-overview p{margin:0;color:var(--muted);font-size:13px}
+    .settings-overview-stats{display:flex;gap:10px;flex-wrap:wrap}
+    .settings-stat{min-width:110px;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}
+    .settings-stat strong{display:block;font-size:19px}
+    .settings-stat span{color:var(--muted);font-size:11px}
+    .settings-layout{display:grid;grid-template-columns:255px minmax(0,1fr);gap:18px;align-items:start}
+    .settings-navigation{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+    .settings-navigation h2{margin:4px 5px 12px;font-size:13px}
+    .settings-category-list{display:grid;gap:4px}
+    .settings-category{display:flex;align-items:center;gap:10px;width:100%;padding:10px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--muted);text-align:left;font-size:12px}
+    .settings-category:hover{background:var(--card-2);color:var(--text)}
+    .settings-category.active{border-color:var(--line);background:var(--card-2);color:var(--text);font-weight:700}
+    .settings-category-icon{width:20px;text-align:center;color:var(--blue)}
+    .settings-panel{min-width:0;display:grid;gap:14px}
+    .settings-panel>.card{margin:0}
+    .settings-panel-title{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+    .settings-panel-title h2{margin:0 0 5px;font-size:18px}
+    .settings-panel-title p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}
+    .settings-shortcuts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .settings-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .settings-info{padding:14px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}
+    .settings-info strong{display:block;margin-bottom:5px;font-size:12px}
+    .settings-info p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}
+    .settings-save-status{min-height:1.5em;color:var(--muted);font-size:12px}
+    .settings-search-results{margin:10px 4px 4px;color:var(--muted);font-size:11px}
+    .settings-panel .form-grid{gap:4px 18px}
+    .settings-panel .advanced-options{margin-top:12px}
+    @media(max-width:900px){.settings-layout{grid-template-columns:220px minmax(0,1fr)}.settings-overview{align-items:flex-start;flex-direction:column}}
+    @media(max-width:740px){.settings-layout{grid-template-columns:1fr}.settings-navigation{position:relative;top:auto;max-height:none}.settings-category-list{display:flex;overflow-x:auto;padding-bottom:5px}.settings-category{flex:0 0 max-content}.settings-info-grid{grid-template-columns:1fr}.settings-overview-stats{width:100%}.settings-stat{flex:1;min-width:80px}}
+    .metric-card{min-width:0;min-height:145px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;padding:20px;border:1px solid var(--line);border-radius:15px;background:var(--card);color:var(--text);text-align:left}
+    button.metric-card{cursor:pointer;transition:border-color .15s,transform .15s}
+    button.metric-card:hover{border-color:var(--blue);transform:translateY(-2px)}
+    .metric-card .metric{margin:6px 0 2px}
+    .dashboard-columns{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(340px,.9fr);gap:20px}
+    .dashboard-main-column,.dashboard-side-column{min-width:0}
+    .system-status-list{display:grid}
+    .status-line{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+    .status-line:last-child{border-bottom:0}
+    .status-indicator{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:var(--muted)}
+    .status-indicator.green{background:var(--green)}.status-indicator.yellow{background:var(--amber)}.status-indicator.red{background:var(--red)}
+    .status-line>div{flex:1;min-width:0}.status-line strong{display:block;font-size:14px}.status-line small{display:block;margin-top:3px;color:var(--muted);font-size:12px}
+    .status-value{font-size:12px;font-weight:700;white-space:nowrap}.status-value.green{color:var(--green)}.status-value.yellow{color:var(--amber)}.status-value.red{color:var(--red)}
+    .quick-action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .quick-action{display:grid;gap:5px;min-height:98px;padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);text-align:left}
+    .quick-action:hover{border-color:var(--blue);background:var(--card-2)}
+    .quick-action>span{color:var(--blue);font-size:18px}.quick-action strong{font-size:13px}.quick-action small{color:var(--muted);font-size:12px}
+    .attention-card{border-color:#f59e0b55}
+    .attention-row{width:100%;display:flex;align-items:center;gap:12px;padding:12px 0;border:0;border-top:1px solid var(--line);background:transparent;color:var(--text);text-align:left}
+    .attention-row>span:first-child{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#f59e0b20;color:var(--amber);font-weight:800}
+    .attention-row .attention-number{background:#ef444420!important;color:var(--red)!important}
+    .attention-row strong{flex:1;font-size:13px}.attention-row>span:last-child{color:var(--muted);font-size:20px}
+    .section-tabs{display:flex;gap:6px;margin:0 0 20px;padding:5px;border-bottom:1px solid var(--line);overflow-x:auto}
+    .section-tabs button{min-height:42px;padding:9px 14px;border:0;border-radius:9px;background:transparent;color:var(--muted);font-weight:650;white-space:nowrap}
+    .section-tabs button:hover{background:var(--card-2);color:var(--text)}
+    .section-tabs button.active{background:#6366f116;color:var(--blue)}
+    .provider-summary{display:flex;gap:0;margin-bottom:18px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}
+    .provider-summary>div{display:grid;gap:4px;flex:1;padding:16px 20px;border-right:1px solid var(--line)}
+    .provider-summary>div:last-child{border-right:0}
+    .provider-summary strong{font-size:24px}.provider-summary span{color:var(--muted);font-size:12px}
+    .details-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;list-style:none;cursor:pointer}
+    .details-summary::-webkit-details-marker{display:none}
+    .details-summary strong,.details-summary small{display:block}
+    .details-summary strong{font-size:15px}.details-summary small{margin-top:4px;color:var(--muted);font-size:13px}
+    .summary-chevron{font-size:20px;color:var(--blue)}
+    details[open]>.details-summary .summary-chevron{font-size:0}
+    details[open]>.details-summary .summary-chevron::before{content:"−";font-size:22px}
+    .provider-editor,.model-editor{margin-top:12px}
+    .advanced-options{padding:12px 0;border-top:1px solid var(--line)}
+    .advanced-options>summary{cursor:pointer;color:var(--blue);font-size:13px;font-weight:650}
+    .compact-select{width:auto;min-width:175px;max-width:100%;margin:0}
+    .ai-model-row .list-item{align-items:flex-start}
+    .content-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 14px}
+    .content-toolbar>div{display:flex;gap:10px;flex-wrap:wrap}
+    .content-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .content-card{min-height:220px}
+    .content-card h2{overflow-wrap:anywhere}
+    .editor-panel{margin-bottom:18px}
+    .editor-panel>form{padding-top:12px}
+    .content-editor{min-height:220px!important;font-size:15px;line-height:1.6}
+    .platform-picker{display:flex;flex-wrap:wrap;gap:10px}
+    .platform-picker label,.platform-picker button{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:9px 13px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font-size:13px}
+    .connect-platforms{margin-bottom:18px}
+    .connect-platforms button{flex:1;justify-content:center}
+    .policy-explanations{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .policy-explanations>div{display:grid;gap:5px;padding:14px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}
+    .policy-explanations strong{font-size:13px}.policy-explanations span{font-size:12px;color:var(--muted);line-height:1.5}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .search-hidden{display:none!important}
+    .activity-filters{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+    .activity-filters>label{display:grid;gap:5px;font-size:11px;color:var(--muted)}
+    .activity-filters input[type=search]{max-width:320px;margin:0}
+    .activity-filters input[type=date]{margin:0}
+    .log-details summary{cursor:pointer;color:var(--blue);font-size:12px}
+    .log-details pre{max-width:min(420px,70vw);max-height:240px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+    .pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px}
+    .pagination>div{display:flex;gap:8px}
+    .secret-field{display:flex;align-items:center;gap:8px}
+    .secret-field input{flex:1;min-width:0}
+    .link-btn{border:0;background:none;color:var(--blue);font:inherit;font-size:12px;cursor:pointer;padding:8px}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    :root[data-theme="light"] .metric-card,:root[data-theme="light"] .quick-action,:root[data-theme="light"] .provider-summary,:root[data-theme="light"] .policy-explanations>div{background:var(--card)}
+    @media(max-width:1050px){.dashboard-columns{grid-template-columns:1fr}.dashboard-side-column{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.dashboard-side-column>.section{margin-top:0}.attention-card{grid-column:1/-1}}
+    @media(max-width:740px){.dashboard-welcome{grid-template-columns:1fr;padding:18px}.dashboard-welcome-image{justify-self:start;width:min(100%,260px)}.dashboard-actions{width:100%}.dashboard-actions .btn{flex:1}.dashboard-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-card{min-height:120px;padding:16px}.metric-card .metric{font-size:30px}.dashboard-side-column{display:grid;grid-template-columns:1fr}.attention-card{grid-column:auto}.content-list{grid-template-columns:1fr}.content-toolbar{align-items:flex-start;flex-direction:column}.policy-explanations{grid-template-columns:1fr}.provider-summary>div{padding:13px 10px}.provider-summary strong{font-size:20px}.provider-summary span{font-size:11px}.connect-platforms button{flex:calc(50% - 10px)}.section-tabs{margin-right:-4px;margin-left:-4px}}
+    @media(max-width:420px){.dashboard-metrics{grid-template-columns:1fr}.dashboard-actions{flex-direction:column}.quick-action-grid{grid-template-columns:1fr}}
+    :root{--bg:#0b1220;--panel:#111a2b;--card:#151f32;--card-2:#1b2940;--line:#293850;--text:#eef3fb;--muted:#9aa8bd;--blue:#6c8cff;--purple:#8b7bff;--shadow:0 20px 60px #02061766}
+    :root[data-theme="light"]{--bg:#f4f7fb;--panel:#fff;--card:#fff;--card-2:#f7f9fd;--line:#dce4ef;--text:#182337;--muted:#637188;--blue:#4667d9;--purple:#6653ca;--shadow:0 14px 34px #16254412}
+    body{background:radial-gradient(ellipse at 82% -24%,color-mix(in srgb,var(--blue) 15%,transparent),transparent 42%),var(--bg)}
+    .app{grid-template-columns:258px minmax(0,1fr)}
+    .sidebar{background:var(--panel);border-color:var(--line)}
+    .nav-groups{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+    .nav-group{margin-bottom:5px}
+    .nav-group .nav-label{padding:13px 12px 5px;color:var(--muted);font-size:10px;letter-spacing:.11em}
+    .nav-group .nav{gap:2px}
+    .nav-group .nav button{min-height:38px;padding:8px 10px;gap:10px;font-size:12px}
+    .nav-group .nav-icon{font-size:15px}
+    .main{min-width:0}
+    .topbar{border-color:var(--line)}
+    .searchbox{display:flex;align-items:center;gap:9px;padding:0 11px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--muted)}
+    .searchbox>span{font-size:20px;line-height:1}
+    .searchbox .search{width:min(33vw,320px);padding:10px 0;border:0;background:transparent;outline:0}
+    .searchbox:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 16%,transparent)}
+    .icon-btn{background:var(--panel);border-color:var(--line);color:var(--text)}
+    .card{background:var(--card);border-color:var(--line);box-shadow:0 7px 24px #02081714}
+    .list-item{background:var(--panel);border-color:var(--line)}
+    .field,.search{background:var(--panel);border-color:var(--line);color:var(--text)}
+    .notice{background:var(--card-2);border-color:var(--line);color:var(--text)}
+    .pill{background:var(--card-2);color:var(--text)}
+    .status{border-color:color-mix(in srgb,var(--green) 40%,transparent);background:color-mix(in srgb,var(--green) 13%,var(--panel))}
+    .login-wrap{background:radial-gradient(ellipse at 80% 10%,color-mix(in srgb,var(--blue) 18%,transparent),transparent 45%),var(--bg)}
+    .login{background:color-mix(in srgb,var(--panel) 95%,transparent);border-color:var(--line);backdrop-filter:blur(16px)}
+    .login-intro{margin:0 0 22px}
+    .login-intro h2{margin:6px 0 2px;font-size:23px}
+    .login-intro p{margin:0;color:var(--muted);font-size:13px}
+    .password-input{display:flex;align-items:center;position:relative;margin:7px 0 16px}
+    .password-input .field{margin:0;padding-right:66px}
+    .password-toggle{position:absolute;right:9px;border:0;background:transparent;color:var(--blue);font-size:12px;font-weight:700}
+    .login #loginButton{margin-top:9px}
+    .login .link-btn{display:block;margin:8px auto 0}
+    .login #loginMessage{min-height:18px}
+    :root[data-theme="light"] body{background:radial-gradient(ellipse at 82% -24%,#4667d91a,transparent 42%),var(--bg)}
+    :root[data-theme="light"] .card,:root[data-theme="light"] .sidebar,:root[data-theme="light"] .topbar{border-color:var(--line)}
+    :root[data-theme="light"] .list-item,:root[data-theme="light"] .field,:root[data-theme="light"] .search,:root[data-theme="light"] .searchbox,:root[data-theme="light"] .icon-btn{background:var(--panel);color:var(--text);border-color:var(--line)}
+    :root[data-theme="light"] .btn.secondary{background:#edf2fa;border-color:#d6dfec;color:#26344a}
+    :root[data-theme="light"] .btn.ghost{color:#34445c;border-color:#cdd8e7}
+    :root[data-theme="light"] .notice{background:#f6f8fc;color:var(--text);border-color:var(--line)}
+    :root[data-theme="light"] .notice.warning{background:#fff7e6;border-color:#edcf8b;color:#795308}
+    :root[data-theme="light"] .notice.success{background:#eaf8f1;border-color:#aad9bf;color:#175d3c}
+    :root[data-theme="light"] .pill.green{background:#e4f5eb;color:#17633d}
+    :root[data-theme="light"] .pill.yellow{background:#fff4d8;color:#795308}
+    :root[data-theme="light"] .pill.red{background:#fde9ec;color:#9e2635}
+    :root[data-theme="light"] .login{background:color-mix(in srgb,#fff 96%,transparent)}
+    @media(max-width:1100px){.app{grid-template-columns:230px minmax(0,1fr)}}
+    @media(max-width:740px){.app,.app.sidebar-collapsed{grid-template-columns:1fr}.sidebar{width:278px}.main{padding:0 16px 30px}.topbar{gap:8px}.searchbox{min-width:0}.searchbox .search{width:min(47vw,240px)}.top-right{gap:6px}.nav-group .nav button{min-height:42px;font-size:13px}}
+    @media(max-width:420px){.main{padding-right:11px;padding-left:11px}.searchbox .search{width:min(42vw,190px)}.topbar .icon-btn{width:35px;height:35px}.login{padding:24px}}
+  </style>
+</head>
+<body>
+  <div id="loginScreen" class="login-wrap">
+    <section class="login">
+      <div class="login-brand"><img id="loginProfilePhoto" class="profile-photo brand-image hidden" alt="Nyamal logo"><span id="loginBrandMark" class="brand-mark" aria-hidden="true">✦</span><div><h1>Nyamal AI</h1><span class="muted small">Expanded operations center</span></div></div>
+      <div class="login-intro"><div class="eyebrow">SECURE WORKSPACE</div><h2>Welcome back</h2><p>Sign in to manage Nyamal's AI operations.</p></div>
+      <form id="loginForm" onsubmit="login(event)">
+        <label class="field-label" for="username">Username</label><input id="username" class="field" autocomplete="username" required>
+        <label class="field-label" for="password">Password</label><div class="password-input"><input id="password" class="field" type="password" autocomplete="current-password" required><button class="password-toggle" type="button" aria-label="Show password" onclick="togglePasswordVisibility('password', this)">Show</button></div>
+        <button id="loginButton" class="btn" type="submit" style="width:100%">Sign in securely</button>
+        <button class="link-btn" type="button" onclick="showForgot()">Forgot password?</button>
+        <p id="loginMessage" class="small" role="status"></p>
+      </form>
+      <div id="forgotForm" class="hidden">
+        <h2>Reset your password</h2><p class="small">Enter your verified recovery email to receive a single-use reset link.</p>
+        <label class="field-label" for="forgotEmail">Recovery email</label><input id="forgotEmail" class="field" type="email" autocomplete="email" required>
+        <button class="btn" type="button" onclick="requestReset()" style="width:100%">Send reset link</button><button class="link-btn" type="button" onclick="showLogin()">Back to sign in</button>
+        <p id="forgotMessage" class="small" role="status"></p>
+      </div>
+      <div id="resetForm" class="hidden">
+        <h2>Choose a new password</h2><p class="small">Use at least 12 characters. Reset links expire after 30 minutes.</p>
+        <label class="field-label" for="resetPassword">New password</label><div class="password-input"><input id="resetPassword" class="field" type="password" autocomplete="new-password" minlength="12" required><button class="password-toggle" type="button" aria-label="Show password" onclick="togglePasswordVisibility('resetPassword', this)">Show</button></div>
+        <label class="field-label" for="resetConfirm">Confirm password</label><div class="password-input"><input id="resetConfirm" class="field" type="password" autocomplete="new-password" minlength="12" required><button class="password-toggle" type="button" aria-label="Show password" onclick="togglePasswordVisibility('resetConfirm', this)">Show</button></div>
+        <button class="btn" type="button" onclick="submitReset()" style="width:100%">Set new password</button><button class="link-btn" type="button" onclick="showLogin()">Back to sign in</button>
+        <p id="resetMessage" class="small" role="status"></p>
+      </div>
+    </section>
+  </div>
+  <div id="app" class="app hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="brand"><img id="brandProfilePhoto" class="profile-photo brand-image hidden" alt="Nyamal logo"><span id="brandMark" class="brand-mark" aria-hidden="true">✦</span><div class="brand-copy">Nyamal AI<small>EXPANDED OPERATIONS CENTER</small></div></div>
+      <button id="sidebarCollapse" class="collapse-toggle" type="button" aria-label="Collapse navigation" aria-expanded="true" title="Collapse navigation"><span class="nav-icon">⇤</span><span class="nav-text">Collapse menu</span></button>
+      <div id="nav" class="nav-groups" role="navigation" aria-label="Main navigation">
+        <div class="nav-group"><div class="nav-label">OVERVIEW</div><div class="nav">
+          <button data-page="overview" class="active" title="Dashboard"><span class="nav-icon">⌂</span><span class="nav-text">Dashboard</span></button>
+        </div></div>
+        <div class="nav-group"><div class="nav-label">ARTIFICIAL INTELLIGENCE</div><div class="nav">
+          <button data-page="ai" data-ai-tab="chat" title="AI workspace"><span class="nav-icon">✦</span><span class="nav-text">AI Workspace</span></button>
+          <button data-page="ai" data-ai-tab="providers" title="AI providers"><span class="nav-icon">◈</span><span class="nav-text">AI Providers</span></button>
+          <button data-page="ai" data-ai-tab="models" title="AI models"><span class="nav-icon">▦</span><span class="nav-text">Models &amp; Routing</span></button>
+          <button data-page="ai" data-ai-tab="usage" title="AI usage"><span class="nav-icon">◷</span><span class="nav-text">AI Usage</span></button>
+        </div></div>
+        <div class="nav-group"><div class="nav-label">CHANNELS &amp; CONNECTIONS</div><div class="nav">
+          <button data-page="social" data-platform="all" title="All connections"><span class="nav-icon">◎</span><span class="nav-text">All Connections</span></button>
+          <button data-page="social" data-platform="telegram" title="Telegram connections"><span class="nav-icon">➤</span><span class="nav-text">Telegram</span></button>
+          <button data-page="social" data-platform="facebook" title="Facebook connections"><span class="nav-icon">f</span><span class="nav-text">Facebook Pages</span></button>
+          <button data-page="social" data-platform="instagram" title="Instagram connections"><span class="nav-icon">▣</span><span class="nav-text">Instagram</span></button>
+          <button data-page="social" data-platform="whatsapp" title="WhatsApp connections"><span class="nav-icon">◉</span><span class="nav-text">WhatsApp</span></button>
+          <button data-page="social" data-platform="other" title="Other connections"><span class="nav-icon">＋</span><span class="nav-text">Other Channels</span></button>
+        </div></div>
+        <div class="nav-group"><div class="nav-label">OPERATIONS</div><div class="nav">
+          <button data-page="content" title="Content Studio"><span class="nav-icon">▤</span><span class="nav-text">Content Studio</span></button>
+          <button data-page="approvals" title="Approval Center"><span class="nav-icon">✓</span><span class="nav-text">Approval Center</span><span id="approvalBadge" class="nav-badge hidden"></span></button>
+          <button data-page="automation" title="Automation"><span class="nav-icon">⟳</span><span class="nav-text">Automation</span></button>
+          <button data-page="community" title="Community & welcomes"><span class="nav-icon">✿</span><span class="nav-text">Community &amp; Welcomes</span></button>
+          <button data-page="activity" title="Activity logs"><span class="nav-icon">◷</span><span class="nav-text">Activity Logs</span></button>
+          <button data-page="knowledge" title="Knowledge base and memory"><span class="nav-icon">▧</span><span class="nav-text">Knowledge &amp; Memory</span></button>
+        </div></div>
+        <div class="nav-group"><div class="nav-label">ADMINISTRATION</div><div class="nav">
+          <button data-page="settings" title="Settings"><span class="nav-icon">⚙</span><span class="nav-text">Settings</span></button>
+          <button data-page="settings" data-settings-section="moderation" title="Moderation and link protection"><span class="nav-icon">⌕</span><span class="nav-text">Moderation &amp; Safety</span></button>
+          <button data-page="settings" data-settings-section="integrations" title="Integrations and API"><span class="nav-icon">⌘</span><span class="nav-text">Integrations &amp; API</span></button>
+          <button data-page="system" title="System diagnostics"><span class="nav-icon">⌁</span><span class="nav-text">System &amp; Diagnostics</span></button>
+          <button data-page="help" title="Help and support"><span class="nav-icon">?</span><span class="nav-text">Help &amp; Support</span></button>
+        </div></div>
+      </div>
+      <div class="sidebar-bottom">
+        <details class="profile-menu">
+          <summary class="admin-mini" title="Account menu"><img id="sidebarProfilePhoto" class="profile-photo brand-image avatar-photo hidden" alt="Nyamal logo"><span id="sidebarAvatar" class="avatar">A</span><div class="profile-copy"><strong id="adminName">Administrator</strong><small>Owner access</small></div><span class="profile-chevron">⌄</span></summary>
+          <div class="profile-menu-pop"><button type="button" onclick="loadPage('settings')">Account settings</button><button type="button" class="profile-signout" onclick="logout()">Sign out</button></div>
+        </details>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="top-left"><button id="mobileMenu" class="icon-btn mobile-toggle" aria-label="Open navigation">☰</button><label class="searchbox"><span aria-hidden="true">⌕</span><input id="globalSearch" class="search" type="search" placeholder="Search this page…" aria-label="Search current page"></label></div>
+        <div class="top-right"><span id="workerStatus" class="status"><i class="dot"></i> Checking</span><button id="themeToggle" class="icon-btn" type="button" aria-label="Switch to light theme" title="Switch theme">☼</button><button id="notificationButton" class="icon-btn" aria-label="Show pending approvals" title="Show pending approvals" onclick="loadPage('approvals')">♧<span id="notificationCount" class="notification-count hidden"></span></button></div>
+      </header>
+      <section class="content">
+        <div class="page-head"><div><div id="pageEyebrow" class="eyebrow">COMMAND CENTER</div><h1 id="pageTitle">Dashboard</h1><p id="pageSubtitle" class="kicker">Your real-time view of Nyamal's operations.</p></div><div id="pageActions" class="page-actions"></div></div>
+        <div id="pageContent" class="stack" aria-live="polite"></div>
+        <div class="footer-note">Nyamal AI · Connected to your Cloudflare Worker and D1 data</div>
+      </section>
+    </main>
+  </div>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const pageMeta = {
+      overview: ["COMMAND CENTER", "Dashboard", "Your real-time view of Nyamal's operations."],
+      ai: ["ARTIFICIAL INTELLIGENCE", "AI Workspace", "Chat, manage providers and models, and review task routing."],
+      content: ["PUBLISHING WORKSPACE", "Content Studio", "Create, review, and manage drafts with approval before publishing."],
+      social: ["CHANNELS & CONNECTIONS", "Connections", "Manage configured accounts and inspect actual publishing activity."],
+      community: ["COMMUNITY OPERATIONS", "Community Manager", "Configure welcomes and replies, and review messages that need your decision."],
+      approvals: ["REVIEW QUEUE", "Approval Center", "Review drafts and queued work before execution."],
+      automation: ["TASK OPERATIONS", "Automation", "Manage supported one-time tasks and inspect their execution state."],
+      activity: ["ADMINISTRATOR AUDIT", "Activity Logs", "Recent recorded administrator and system actions."],
+      knowledge: ["SAVED CONTEXT", "Knowledge Base", "Manage memories Nyamal uses as context for a Telegram user."],
+      settings: ["WORKSPACE CONTROL CENTER", "Settings", "Configure account security, AI behavior, community, connected channels, and operations."],
+      system: ["WORKER OPERATIONS", "System Tools", "Health, webhook setup, and generated reports."],
+      help: ["DOCUMENTATION", "Help & Support", "Understand what this Cloudflare deployment supports."]
+    };
+    const $content = $("pageContent");
+    let currentPage = "overview";
+    let currentModels = [];
+    let aiTab = "chat";
+    let pendingChatImages = [];
+    let socialTab = "accounts";
+    let socialPlatformFilter = "all";
+    let approvalTab = "pending";
+    let resetToken = "";
+    let searchQuery = "";
+    let profilePhotoUrl = "";
+    let profilePreviewUrl = "";
+    let profilePhotoPromise;
+    let settingsSnapshot = null;
+    let settingsSection = "account";
+    async function api(path, options = {}) {
+      const response = await fetch("/v1" + path, {
+        ...options,
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) }
+      });
+      const data = await response.json().catch(() => ({ detail: response.statusText }));
+      if (!response.ok) throw new Error(data.detail || "Request failed");
+      return data;
+    }
+    async function publicJson(path) {
+      const response = await fetch(path, { credentials: "same-origin" });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.detail || "Request failed");
+      return data;
+    }
+    function esc(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[char]);
+    }
+    function showLogin(message = "") {
+      resetToken = "";
+      $("loginScreen").classList.remove("hidden");
+      $("app").classList.add("hidden");
+      $("loginForm").classList.remove("hidden");
+      $("forgotForm").classList.add("hidden");
+      $("resetForm").classList.add("hidden");
+      $("loginMessage").textContent = message;
+    }
+    function showForgot() {
+      $("loginForm").classList.add("hidden");
+      $("resetForm").classList.add("hidden");
+      $("forgotForm").classList.remove("hidden");
+    }
+    function togglePasswordVisibility(inputId, button) {
+      const input = $(inputId);
+      const visible = input.type === "password";
+      input.type = visible ? "text" : "password";
+      button.textContent = visible ? "Hide" : "Show";
+      button.setAttribute("aria-label", visible ? "Hide password" : "Show password");
+    }
+    async function login(event) {
+      if (event) event.preventDefault();
+      const button = $("loginButton");
+      button.disabled = true;
+      button.textContent = "Signing in…";
+      try {
+        const response = await fetch("/v1/auth/login", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: $("username").value.trim(), password: $("password").value })
+        });
+        const data = await response.json().catch(() => ({ detail: response.statusText }));
+        if (!response.ok) throw new Error(data.detail || "Sign-in failed");
+        $("password").value = "";
+        await showDashboard();
+      } catch (error) {
+        $("loginMessage").textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = "Sign in securely";
+      }
+    }
+    async function requestReset() {
+      try {
+        const data = await api("/auth/forgot-password", {
+          method: "POST",
+          body: JSON.stringify({ email: $("forgotEmail").value.trim() })
+        });
+        $("forgotMessage").textContent = data.message;
+      } catch (error) {
+        $("forgotMessage").textContent = error.message;
+      }
+    }
+    async function submitReset() {
+      const password = $("resetPassword").value;
+      if (password.length < 12) { $("resetMessage").textContent = "Password must be at least 12 characters."; return; }
+      if (password !== $("resetConfirm").value) { $("resetMessage").textContent = "The passwords do not match."; return; }
+      try {
+        await api("/auth/reset-password", {
+          method: "POST",
+          body: JSON.stringify({ token: resetToken, new_password: password })
+        });
+        history.replaceState(null, "", location.pathname);
+        showLogin("Password updated. Sign in with your new password.");
+      } catch (error) {
+        $("resetMessage").textContent = error.message;
+      }
+    }
+    async function logout() {
+      try {
+        await api("/auth/logout", { method: "POST" });
+      } finally {
+        showLogin();
+      }
+    }
+    async function showDashboard() {
+      $("loginScreen").classList.add("hidden");
+      $("app").classList.remove("hidden");
+      await profilePhotoPromise;
+      await Promise.all([loadPage("overview"), refreshStatus()]);
+    }
+    function showDefaultBranding() {
+      for (const id of ["loginProfilePhoto", "brandProfilePhoto", "sidebarProfilePhoto"]) $(id).classList.add("hidden");
+      $("loginBrandMark").classList.remove("hidden");
+      $("brandMark").classList.remove("hidden");
+      $("sidebarAvatar").classList.remove("hidden");
+      if (profilePhotoUrl) URL.revokeObjectURL(profilePhotoUrl);
+      profilePhotoUrl = "";
+    }
+    async function loadProfilePhoto() {
+      try {
+        const response = await fetch("/profile-photo", { cache: "no-store", credentials: "same-origin" });
+        if (!response.ok) {
+          showDefaultBranding();
+          return;
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        if (profilePhotoUrl) URL.revokeObjectURL(profilePhotoUrl);
+        profilePhotoUrl = url;
+        for (const id of ["loginProfilePhoto", "brandProfilePhoto", "sidebarProfilePhoto"]) {
+          $(id).src = url;
+          $(id).classList.remove("hidden");
+        }
+        $("loginBrandMark").classList.add("hidden");
+        $("brandMark").classList.add("hidden");
+        $("sidebarAvatar").classList.add("hidden");
+      } catch {
+        showDefaultBranding();
+      }
+    }
+    async function refreshStatus() {
+      try {
+        const health = await publicJson("/health");
+        $("workerStatus").innerHTML = health.status === "ok"
+          ? '<i class="dot"></i> Worker online'
+          : '<i class="dot" style="background:var(--red)"></i> Worker issue';
+      } catch {
+        $("workerStatus").innerHTML = '<i class="dot" style="background:var(--red)"></i> Worker unavailable';
+      }
+      try {
+        const [content, overviewData] = await Promise.all([api("/content"), api("/overview")]);
+        const count = content.items.filter((item) => item.status === "awaiting_approval").length
+          + overviewData.pending_approvals;
+        const badge = $("approvalBadge");
+        const notice = $("notificationCount");
+        for (const element of [badge, notice]) {
+          element.textContent = count > 99 ? "99+" : String(count);
+          element.classList.toggle("hidden", count === 0);
+        }
+      } catch (error) {
+        console.error("Could not load approval count", error);
+      }
+    }
+    function setPageActions(html = "") { $("pageActions").innerHTML = html; }
+    function empty(message) { return `<div class="empty">${esc(message)}</div>`; }
+    function pill(value) {
+      const text = String(value || "unknown");
+      const lower = text.toLowerCase();
+      const color = /healthy|success|connected|approved|completed/.test(lower) ? "green"
+        : /failed|rejected|cancelled|error|disabled/.test(lower) ? "red"
+        : /awaiting|pending|draft|paused|scheduled|review/.test(lower) ? "yellow" : "";
+      return `<span class="pill ${color}">${esc(text.replaceAll("_", " "))}</span>`;
+    }
+    function listItem(title, detail, badge = "", actions = "") {
+      return `<div class="list-item"><div class="list-item-main"><strong>${esc(title)}</strong><small>${esc(detail)}</small></div>${badge}${actions ? `<div class="list-actions">${actions}</div>` : ""}</div>`;
+    }
+    function applySearch() {
+      const query = searchQuery.trim().toLowerCase();
+      $content.querySelectorAll(".list-item,.content-card,tbody tr,.searchable").forEach((item) => {
+        item.classList.toggle("search-hidden", Boolean(query) && !item.textContent.toLowerCase().includes(query));
+      });
+    }
+    async function loadPage(page) {
+      if (!pageMeta[page]) return;
+      currentPage = page;
+      $("sidebar").classList.remove("open");
+      updateNavigationState();
+      const [eyebrow, title, subtitle] = pageMeta[page];
+      $("pageEyebrow").textContent = eyebrow;
+      $("pageTitle").textContent = title;
+      $("pageSubtitle").textContent = subtitle;
+      setPageActions("");
+      $content.innerHTML = '<div class="empty">Loading live data…</div>';
+      try {
+        await ({
+          overview, ai: chat, content: contentPage, social, community, approvals, automation,
+          activity, knowledge, settings, system, help
+        })[page]();
+        applySearch();
+      } catch (error) {
+        if (currentPage === page) $content.innerHTML = `<div class="notice warning">${esc(error.message)}</div>`;
+      }
+    }
+    function updateNavigationState() {
+      document.querySelectorAll("#nav [data-page]").forEach((button) => {
+        let active = button.dataset.page === currentPage;
+        if (active && currentPage === "social") active = button.dataset.platform === socialPlatformFilter;
+        if (active && currentPage === "ai") active = button.dataset.aiTab === aiTab;
+        if (active && currentPage === "settings") {
+          active = button.dataset.settingsSection
+            ? button.dataset.settingsSection === settingsSection
+            : !["moderation", "integrations"].includes(settingsSection);
+        }
+        button.classList.toggle("active", active);
+        if (active) button.setAttribute("aria-current", "page");
+        else button.removeAttribute("aria-current");
+      });
+    }
+    function navigateFromNav(button) {
+      const page = button.dataset.page;
+      if (page === "ai" && button.dataset.aiTab) aiTab = button.dataset.aiTab;
+      if (page === "social" && button.dataset.platform) socialPlatformFilter = button.dataset.platform;
+      if (page === "settings") settingsSection = button.dataset.settingsSection || "account";
+      loadPage(page);
+    }
+    async function overview() {
+      const [overviewData, contentData, taskData, logs, providers, models, integrations, health] = await Promise.all([
+        api("/overview"), api("/content"), api("/tasks?limit=100"), api("/audit"),
+        api("/ai/providers"), api("/ai/models"), api("/integrations"), api("/system/doctor")
+      ]);
+      if (currentPage !== "overview") return;
+      const taskRows = taskData.tasks;
+      const pendingContent = contentData.items.filter((item) => item.status === "awaiting_approval").length;
+      const waiting = pendingContent + (overviewData.pending_approvals || 0);
+      const activeTasks = taskRows.filter((task) => task.enabled && ["Pending", "Scheduled", "Running"].includes(task.status)).length;
+      const failedTasks = overviewData.tasks.Failed || 0;
+      const metrics = [
+        ["Pending approvals", waiting, "Items waiting for your review", "approvals"],
+        ["Active automations", activeTasks, "Tasks running or queued", "automation"],
+        ["AI requests today", overviewData.usage_today?.requests || 0, `${overviewData.usage_today?.successes || 0} successful`, "ai"],
+        ["Failed tasks", failedTasks, "Open Automation to review", "automation"]
+      ];
+      const recent = (logs.logs || []).slice(0, 6);
+      const usage = await api("/ai/usage?limit=100");
+      if (currentPage !== "overview") return;
+      const days = new Map();
+      for (let offset = 6; offset >= 0; offset--) {
+        const date = new Date();
+        date.setDate(date.getDate() - offset);
+        days.set(date.toISOString().slice(0, 10), 0);
+      }
+      for (const item of usage.usage || []) {
+        const day = String(item.created_at || "").slice(0, 10);
+        if (days.has(day)) days.set(day, days.get(day) + 1);
+      }
+      const max = Math.max(1, ...days.values());
+      const enabledSocial = integrations.integrations.filter((item) => item.enabled && item.has_secret).length;
+      const modelStatus = overviewData.models > 0 ? ["Operational", "green"]
+        : overviewData.providers > 0 ? ["Needs attention", "yellow"] : ["Not configured", "yellow"];
+      const workerStatus = health.status === "ok" ? ["Operational", "green"] : ["Offline", "red"];
+      const automationStatus = workerStatus[0] === "Operational" ? ["Operational", "green"] : ["Offline", "red"];
+      const socialStatus = enabledSocial ? [`${enabledSocial} connected`, "green"] : ["Not configured", "yellow"];
+      const emailStatus = health.password_reset_email_configured ? ["Operational", "green"] : ["Not configured", "yellow"];
+      const recentRows = recent.length
+        ? recent.map((log) => listItem(log.action.replaceAll(".", " "), `${log.created_at} · ${log.target || "Workspace"}`, pill("recorded"))).join("")
+        : empty("Your recent actions will appear here.");
+      $content.innerHTML = `
+        <section class="dashboard-welcome"><div class="dashboard-welcome-copy"><div><div class="eyebrow">YOUR WORKSPACE</div><h2>Welcome back</h2><p>${new Intl.DateTimeFormat(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" }).format(new Date())} · Here’s what needs your attention today.</p></div><div class="dashboard-actions"><button class="btn secondary" data-page="ai">Chat with Nyamal</button><button class="btn" data-page="content">＋ Create content</button></div></div><img class="dashboard-welcome-image" src="/nyamal-welcome.jpg" alt="Nyamal Social AI for Naath Heritage"></section>
+        <section class="grid dashboard-metrics">${metrics.map(([label, number, foot, page]) => `<button class="metric-card" type="button" data-page="${page}"><span class="metric-label">${label}</span><strong class="metric">${number}</strong><span class="metric-foot">${foot}</span></button>`).join("")}</section>
+        <section class="dashboard-columns section">
+          <div class="dashboard-main-column">
+            <article class="card"><div class="card-head"><div><h2>AI activity</h2><p class="hint">Requests over the last seven days</p></div>${pill(`${overviewData.providers} providers`)}</div><div class="chart">${[...days].map(([day, count]) => `<div class="bar-col" title="${count} requests"><span class="small">${count || ""}</span><div class="bar" style="height:${Math.max(4, count / max * 100)}px"></div><span class="bar-label">${esc(day.slice(5))}</span></div>`).join("")}</div></article>
+            <article class="card section"><div class="card-head"><h2>Recent activity</h2><button class="btn ghost small-btn" onclick="loadPage('activity')">See all activity</button></div><div class="list">${recentRows}</div></article>
+          </div>
+          <div class="dashboard-side-column">
+            <article class="card"><div class="card-head"><h2>System status</h2>${pill(workerStatus[0])}</div><div class="system-status-list">
+              ${statusLine("AI", "Provider and chat model", modelStatus[0], modelStatus[1])}
+              ${statusLine("Cloudflare Worker", "API and scheduled runtime", workerStatus[0], workerStatus[1])}
+              ${statusLine("Social accounts", "Publishing connections", socialStatus[0], socialStatus[1])}
+              ${statusLine("Automation", "Scheduled task processing", automationStatus[0], automationStatus[1])}
+              ${statusLine("Email", "Password recovery delivery", emailStatus[0], emailStatus[1])}
+            </div></article>
+            <article class="card section"><div class="card-head"><h2>Quick actions</h2></div><div class="quick-action-grid">
+              <button class="quick-action" data-page="ai"><span>✦</span><strong>Start chat</strong><small>Ask Nyamal anything</small></button>
+              <button class="quick-action" data-page="content"><span>＋</span><strong>Create content</strong><small>Start a new draft</small></button>
+              <button class="quick-action" data-page="approvals"><span>✓</span><strong>Review approvals</strong><small>${waiting} waiting</small></button>
+              <button class="quick-action" data-page="ai"><span>⚙</span><strong>Configure AI</strong><small>${providers.providers.length} provider(s)</small></button>
+              <button class="quick-action" data-page="social"><span>◉</span><strong>Manage accounts</strong><small>${enabledSocial} connected</small></button>
+            </div></article>
+            ${(waiting || failedTasks) ? `<article class="card section attention-card"><div class="card-head"><h2>Needs your attention</h2></div>${waiting ? `<button class="attention-row" data-page="approvals"><span>${waiting}</span><strong>Approval${waiting === 1 ? "" : "s"} waiting for review</strong><span>›</span></button>` : ""}${failedTasks ? `<button class="attention-row" data-page="automation"><span class="attention-number">${failedTasks}</span><strong>Failed task${failedTasks === 1 ? "" : "s"} to review</strong><span>›</span></button>` : ""}</article>` : ""}
+          </div>
+        </section>`;
+    }
+    function statusLine(name, detail, status, tone) {
+      return `<div class="status-line"><span class="status-indicator ${esc(tone)}"></span><div><strong>${esc(name)}</strong><small>${esc(detail)}</small></div><span class="status-value ${esc(tone)}">${esc(status)}</span></div>`;
+    }
+    function readCapabilities(model) {
+      try { return JSON.parse(model.capabilities_json || "{}"); }
+      catch { return {}; }
+    }
+    function capabilitySummary(model) {
+      const entries = Object.entries(readCapabilities(model));
+      if (!entries.length) return "Capabilities not reported";
+      return entries.map(([name, state]) => `${name.replaceAll("_", " ")}: ${state}`).join(" · ");
+    }
+    function modelCostSummary(model) {
+      const costs = [];
+      if (Number.isFinite(model.input_cost_per_million)) costs.push(`input $${model.input_cost_per_million}/1M tokens`);
+      if (Number.isFinite(model.output_cost_per_million)) costs.push(`output $${model.output_cost_per_million}/1M tokens`);
+      return costs.length ? costs.join(" · ") : "Pricing not reported";
+    }
+    function modelCapabilityControls() {
+      return ["chat", "reasoning", "coding", "vision", "image_generation", "audio_input",
+        "audio_output", "video_input", "search", "tool_calling", "structured_output"]
+        .map((name) => `<label class="hint"><input type="checkbox" name="modelCapability" value="${name}"> ${name.replaceAll("_", " ")}</label>`)
+        .join("");
+    }
+    async function chat() {
+      const [data, providers, models, usage, catalog] = await Promise.all([
+        api("/ai/chat"), api("/ai/providers"), api("/ai/models"), api("/ai/usage?limit=30"), api("/ai/providers/catalog")
+      ]);
+      if (currentPage !== "ai") return;
+      currentModels = models.models;
+      const tabNames = { chat: "Chat", providers: "AI providers", models: "Models", usage: "Usage" };
+      $("pageTitle").textContent = aiTab === "providers" ? "AI Providers" : aiTab === "models" ? "Models" : aiTab === "usage" ? "AI Usage" : "Nyamal AI";
+      $("pageSubtitle").textContent = aiTab === "chat"
+        ? "Chat with Nyamal using your connected AI models."
+        : aiTab === "providers" ? "Connect and check the AI services Nyamal can use."
+          : aiTab === "models" ? "Choose which models handle chat, content, and other tasks."
+            : "Review real model activity and recent requests.";
+      const tabs = `<nav class="section-tabs" aria-label="AI workspace">${Object.entries(tabNames).map(([key, label]) => `<button class="${aiTab === key ? "active" : ""}" type="button" aria-current="${aiTab === key ? "page" : "false"}" onclick="setAiTab('${key}')">${label}</button>`).join("")}</nav>`;
+      const providerRows = providers.providers.map((provider) => listItem(
+        provider.name,
+        `${provider.models} model(s) · ${provider.priority === 1 ? "Default priority" : `Priority ${provider.priority}`} · ${provider.last_status || "Not tested"}`,
+        pill(provider.enabled ? "enabled" : "disabled"),
+        `<button class="btn secondary small-btn" onclick="discoverAiProvider('${esc(provider.id)}')">Discover</button><button class="btn secondary small-btn" onclick="testAiProvider('${esc(provider.id)}')">Test</button><button class="btn danger small-btn" onclick="deleteAiProvider('${esc(provider.id)}')">Delete</button>`
+      )).join("");
+      const modelRows = models.models.map((model) => {
+        const capabilities = Object.entries(readCapabilities(model))
+          .filter(([, state]) => state === "supported").map(([name]) => name).join(",");
+        return `<div class="ai-model-row" data-enabled="${model.enabled ? "true" : "false"}" data-tasks="${esc(model.task_types || "")}" data-capabilities="${esc(capabilities)}">${listItem(
+          model.display_name || model.model_name,
+          `${model.provider_name} · ${model.model_name} · ${model.task_types || "No task types assigned"} · ${capabilitySummary(model)}`,
+          pill(model.enabled ? "enabled" : model.catalog_status || "disabled"),
+          `<button class="btn secondary small-btn" onclick="editAiModel('${esc(model.id)}')">Configure</button><button class="btn secondary small-btn" onclick="toggleAiModel('${esc(model.id)}',${model.enabled ? "false" : "true"})">${model.enabled ? "Disable" : "Enable"}</button><button class="btn danger small-btn" onclick="deleteAiModel('${esc(model.id)}')">Delete</button>`
+        )}</div>`;
+      }).join("");
+      const chatView = `<article class="card"><div class="card-head"><div><h2>Conversation</h2><p class="hint">Use the same enabled models and failover as Nyamal’s connected channels. Attach a photo to ask Nyamal about it.</p></div><button class="btn ghost small-btn" onclick="clearChat()">Clear chat</button></div><div id="chatMessages" class="chat-list">${data.messages.length ? data.messages.map(renderMessage).join("") : empty("Say hello to start chatting.")}</div><div id="chatImagePreview" class="row section"></div><form class="chat-composer" onsubmit="sendChat(event)"><input id="chatImageInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onchange="handleChatImages(event)"><textarea id="chatInput" class="field" maxlength="4000" placeholder="Message Nyamal or attach an image…"></textarea><button class="btn secondary" type="button" onclick="document.getElementById('chatImageInput').click()">Add image</button><button id="chatSend" class="btn" type="submit">Send</button></form><p class="hint">JPEG, PNG, or WebP · up to 4 images · 2 MB each · images are only sent to a model marked vision-capable.</p></article>`;
+      const providerView = `<section class="section"><div class="provider-summary"><div><strong>${providers.providers.length}</strong><span>Providers</span></div><div><strong>${providers.providers.filter((item) => item.enabled && item.has_key).length}</strong><span>Connected</span></div><div><strong>${models.models.length}</strong><span>Models available</span></div></div>
+        <details class="card provider-editor"><summary class="details-summary"><span><strong>＋ Add an AI provider</strong><small>Choose a service and add its API key. Keys are encrypted.</small></span><span class="summary-chevron">＋</span></summary>
+          <form class="form-grid section" onsubmit="saveAiProvider(event)">
+            <div><label class="field-label" for="providerPreset">AI service</label><select id="providerPreset" class="field" onchange="selectProviderPreset()"><option value="">Choose a provider…</option>${catalog.providers.map((item) => `<option value="${esc(item.id)}">${esc(item.name)}</option>`).join("")}</select></div>
+            <div><label class="field-label" for="providerName">Display name</label><input id="providerName" class="field" placeholder="For example, Gemini" maxlength="100" required></div>
+            <div class="wide"><label class="field-label" for="providerKey">API key</label><div class="secret-field"><input id="providerKey" class="field" type="password" autocomplete="new-password" placeholder="Paste the key from your provider"><button class="link-btn" type="button" onclick="toggleSecretField('providerKey',this)">Show</button></div></div>
+            <details class="wide advanced-options"><summary>Advanced connection options</summary><div class="form-grid section">
+              <div><label class="field-label" for="providerId">Provider ID</label><input id="providerId" class="field" placeholder="Provider ID" maxlength="80"></div>
+              <div><label class="field-label" for="providerProtocol">API type</label><select id="providerProtocol" class="field"><option value="openai-compatible">OpenAI-compatible</option><option value="gemini">Gemini</option><option value="anthropic">Anthropic Messages</option><option value="cohere">Cohere Chat</option><option value="azure-openai">Azure OpenAI</option></select></div>
+              <div class="wide"><label class="field-label" for="providerUrl">API address</label><input id="providerUrl" class="field" type="url" placeholder="Public HTTPS API base URL"></div>
+              <div><label class="field-label" for="providerAuthHeader">Authentication header</label><select id="providerAuthHeader" class="field"><option value="Authorization">Authorization: Bearer</option><option value="x-api-key">x-api-key</option><option value="x-goog-api-key">x-goog-api-key</option><option value="api-key">api-key (Azure)</option></select></div>
+              <div><label class="field-label" for="providerAuthPrefix">Authentication prefix</label><input id="providerAuthPrefix" class="field" placeholder="Bearer " value="Bearer "></div>
+              <div><label class="field-label" for="providerModelPath">Model list path</label><input id="providerModelPath" class="field" placeholder="/models" value="/models"></div>
+              <div><label class="field-label" for="providerApiVersion">API version (if needed)</label><input id="providerApiVersion" class="field"></div>
+              <div><label class="field-label" for="providerPriority">Priority (lower is preferred)</label><input id="providerPriority" class="field" type="number" min="1" max="10000" value="100"></div>
+            </div></details>
+            <div class="wide"><button class="btn" type="submit">Save provider</button><p class="hint">Your API key is encrypted before it is stored and is never shown again.</p></div>
+          </form>
+        </details>
+        <article class="card section"><div class="card-head"><div><h2>Your providers</h2><p class="hint">Test a connection or discover the models it offers.</p></div></div><div class="list">${providerRows || empty("No providers added yet. Choose Add an AI provider to begin.")}</div><div id="modelDiscovery" class="section"></div></article></section>`;
+      const modelView = `<section class="section"><article class="card"><div class="card-head"><div><h2>Model library</h2><p class="hint">${models.models.length} model(s). Add a provider first, then discover its available models.</p></div><select id="modelFilter" class="field compact-select" onchange="filterAiModels()"><option value="all">All models</option><option value="enabled">Enabled</option><option value="disabled">Disabled</option><option value="chat">Chat</option><option value="reasoning">Reasoning</option><option value="vision">Vision</option><option value="coding">Coding</option><option value="image_generation">Image generation</option></select></div>
+          <details class="card model-editor"><summary class="details-summary"><span><strong>＋ Add or configure a model</strong><small>Choose a provider and enter the model ID shown in its catalog.</small></span><span class="summary-chevron">＋</span></summary>
+            <form class="form-grid section" onsubmit="saveAiModel(event)"><input id="modelId" type="hidden">
+              <div><label class="field-label" for="modelProvider">Provider</label><select id="modelProvider" class="field" required>${providers.providers.map((item) => `<option value="${esc(item.id)}">${esc(item.name)}</option>`).join("")}</select></div>
+              <div><label class="field-label" for="modelName">Model ID</label><input id="modelName" class="field" placeholder="Choose or discover a model ID" maxlength="200" required></div>
+              <div><label class="field-label" for="modelDisplay">Display name (optional)</label><input id="modelDisplay" class="field" placeholder="Friendly model name" maxlength="200"></div>
+              <div><label class="field-label" for="modelTasks">Task types</label><input id="modelTasks" class="field" value="chat,content,analysis" placeholder="chat,content,analysis"></div>
+              <details class="wide advanced-options"><summary>Advanced settings and capabilities</summary><div class="section"><label class="field-label">Capabilities verified for this model</label><div id="modelCapabilities" class="grid two">${modelCapabilityControls()}</div><label class="hint"><input id="modelEnabled" type="checkbox" checked> Enable this model after verification</label><div class="row"><input id="modelPriority" class="field" type="number" min="1" max="10000" value="100" aria-label="Model priority"><input id="modelTokenLimit" class="field" type="number" min="1" placeholder="Daily token limit (optional)"><input id="modelRequestLimit" class="field" type="number" min="1" placeholder="Daily request limit (optional)"></div></div></details>
+              <div class="wide row"><button class="btn" type="submit" ${providers.providers.length ? "" : "disabled"}>Save model</button><button class="btn ghost" type="button" onclick="resetAiModelForm()">Clear</button></div>
+            </form>
+          </details>
+          <div class="list section">${modelRows || empty("No models registered yet.")}</div></article></section>`;
+      const usageView = `<article class="card section"><div class="card-head"><div><h2>Recent requests</h2><p class="hint">Actual AI activity recorded by Nyamal.</p></div></div><div class="list">${usage.usage.map((item) => listItem(`${item.provider_name || "Provider"} · ${item.model_name || item.model_id || "Model"}`, `${item.task_type} · ${item.latency_ms} ms · ${item.created_at}`, pill(item.success ? "success" : `failed ${item.error_code || ""}`))).join("") || empty("No model requests recorded.")}</div></article>`;
+      const views = { chat: chatView, providers: providerView, models: modelView, usage: usageView };
+      $content.innerHTML = `${tabs}${views[aiTab] || chatView}`;
+      if (aiTab === "chat") {
+        $("chatMessages").scrollTop = $("chatMessages").scrollHeight;
+        renderPendingChatImages();
+      }
+    }
+    async function setAiTab(tab) {
+      if (!["chat", "providers", "models", "usage"].includes(tab)) return;
+      aiTab = tab;
+      updateNavigationState();
+      await chat();
+    }
+    function filterAiModels() {
+      const filter = $("modelFilter")?.value || "all";
+      document.querySelectorAll(".ai-model-row").forEach((row) => {
+        const enabled = row.dataset.enabled === "true";
+        const tokens = `${row.dataset.tasks || ""},${row.dataset.capabilities || ""}`.toLowerCase().split(",");
+        const visible = filter === "all" || filter === "enabled" && enabled || filter === "disabled" && !enabled
+          || tokens.includes(filter);
+        row.classList.toggle("hidden", !visible);
+      });
+    }
+    async function saveAiProvider(event) {
+      event.preventDefault();
+      await api("/ai/providers", { method: "POST", body: JSON.stringify({
+        preset_id: $("providerPreset").value || null,
+        id: $("providerId").value, name: $("providerName").value,
+        api_protocol: $("providerProtocol").value, base_url: $("providerUrl").value,
+        auth_header: $("providerAuthHeader").value,
+        auth_prefix: $("providerAuthPrefix").value,
+        model_list_path: $("providerModelPath").value || "/models",
+        api_version: $("providerApiVersion").value || null,
+        api_key: $("providerKey").value || null,
+        priority: Number($("providerPriority").value),
+        enabled: true
+      }) });
+      $("providerKey").value = "";
+      await chat();
+    }
+    async function selectProviderPreset() {
+      const presetId = $("providerPreset").value;
+      if (!presetId) return;
+      try {
+        const catalog = await api("/ai/providers/catalog");
+        const preset = catalog.providers.find((item) => item.id === presetId);
+        if (!preset) return;
+        $("providerId").value = preset.id;
+        $("providerName").value = preset.name;
+        $("providerProtocol").value = preset.protocol;
+        $("providerUrl").value = preset.base_url;
+        $("providerAuthHeader").value = preset.auth_header;
+        $("providerAuthPrefix").value = preset.auth_prefix;
+        $("providerModelPath").value = preset.model_list_path || "/models";
+        $("providerApiVersion").value = preset.api_version || "";
+      } catch (error) { alert(error.message); }
+    }
+    async function saveAiModel(event) {
+      event.preventDefault();
+      const capabilities = {};
+      document.querySelectorAll('input[name="modelCapability"]:checked').forEach((input) => {
+        capabilities[input.value] = "supported";
+      });
+      await api("/ai/models", { method: "POST", body: JSON.stringify({
+        id: $("modelId").value || undefined,
+        provider_id: $("modelProvider").value, model_name: $("modelName").value,
+        display_name: $("modelDisplay").value, task_types: $("modelTasks").value,
+        priority: Number($("modelPriority").value),
+        enabled: $("modelEnabled").checked,
+        capabilities_json: capabilities,
+        daily_token_limit: $("modelTokenLimit").value ? Number($("modelTokenLimit").value) : null,
+        daily_request_limit: $("modelRequestLimit").value ? Number($("modelRequestLimit").value) : null
+      }) });
+      await chat();
+    }
+    function resetAiModelForm() {
+      $("modelId").value = "";
+      $("modelName").value = "";
+      $("modelDisplay").value = "";
+      $("modelTasks").value = "chat,content,analysis";
+      $("modelPriority").value = "100";
+      $("modelTokenLimit").value = "";
+      $("modelRequestLimit").value = "";
+      $("modelEnabled").checked = true;
+      document.querySelectorAll('input[name="modelCapability"]').forEach((input) => { input.checked = false; });
+    }
+    function editAiModel(id) {
+      const model = currentModels.find((item) => item.id === id);
+      if (!model) return;
+      const editor = document.querySelector(".model-editor");
+      if (editor) editor.open = true;
+      $("modelId").value = model.id;
+      $("modelProvider").value = model.provider_id;
+      $("modelName").value = model.model_name;
+      $("modelDisplay").value = model.display_name || "";
+      $("modelTasks").value = model.task_types || "";
+      $("modelPriority").value = model.priority;
+      $("modelTokenLimit").value = model.daily_token_limit || "";
+      $("modelRequestLimit").value = model.daily_request_limit || "";
+      $("modelEnabled").checked = Boolean(model.enabled);
+      let capabilities = {};
+      try { capabilities = JSON.parse(model.capabilities_json || "{}"); } catch {}
+      document.querySelectorAll('input[name="modelCapability"]').forEach((input) => {
+        input.checked = capabilities[input.value] === "supported";
+      });
+      $("modelName").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    function toggleSecretField(id, button) {
+      const input = $(id);
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      button.textContent = show ? "Hide" : "Show";
+      button.setAttribute("aria-label", `${show ? "Hide" : "Show"} secret value`);
+    }
+    async function discoverAiProvider(id) {
+      const panel = $("modelDiscovery");
+      panel.innerHTML = `<div class="notice">Discovering live models…</div>`;
+      try {
+        const result = await api(`/ai/providers/${encodeURIComponent(id)}/discover`);
+        panel.innerHTML = `<div class="card"><div class="card-head"><div><h3>Live provider catalog</h3><p class="hint">${esc(result.note)}</p></div><button class="btn ghost small-btn" type="button" onclick="this.closest('.card').remove()">Close</button></div>
+          <div class="list">${result.models.map((model) => {
+            const capabilityText = Object.keys(model.capabilities).length
+              ? Object.entries(model.capabilities).map(([name, state]) => `${name}: ${state}`).join(" · ")
+              : "Capabilities not reported";
+            return listItem(model.display_name || model.id, `${model.id} · ${capabilityText}`, pill(model.id),
+              `<button class="btn secondary small-btn" type="button" onclick="importAiModel('${esc(id)}','${esc(model.id)}')">Import disabled</button>`);
+          }).join("") || empty("No models returned by the live catalog.")}</div></div>`;
+      } catch (error) {
+        panel.innerHTML = `<div class="notice warning">${esc(error.message)}</div>`;
+      }
+    }
+    async function importAiModel(id, modelId) {
+      await api(`/ai/providers/${encodeURIComponent(id)}/import`, {
+        method: "POST", body: JSON.stringify({ model_ids: [modelId] })
+      });
+      await chat();
+    }
+    async function testAiProvider(id) {
+      const result = await api(`/ai/providers/${encodeURIComponent(id)}/test`, { method: "POST" });
+      const fallback = result.fallback_used
+        ? ` · connected using fallback model ${result.model_name}${result.previous_failures?.length ? ` after ${result.previous_failures.join("; ")}` : ""}`
+        : result.model_name ? ` · model ${result.model_name}` : "";
+      alert(`Provider test: ${result.status}${fallback}${result.error ? ` · ${result.error}` : ""}`);
+    }
+    async function deleteAiProvider(id) {
+      if (!confirm("Delete this provider and its model records?")) return;
+      await api(`/ai/providers/${encodeURIComponent(id)}`, { method: "DELETE" });
+      await chat();
+    }
+    async function toggleAiModel(id, enabled) {
+      await api(`/ai/models/${encodeURIComponent(id)}`, {
+        method: "PATCH", body: JSON.stringify({ enabled: Boolean(enabled) })
+      });
+      await chat();
+    }
+    async function deleteAiModel(id) {
+      if (!confirm("Delete this model?")) return;
+      await api(`/ai/models/${encodeURIComponent(id)}`, { method: "DELETE" });
+      await chat();
+    }
+    function renderMessage(message) {
+      return `<div class="bubble ${message.role === "user" ? "user" : "assistant"}">${esc(message.content)}<span class="chat-time">${esc(message.created_at || "")}</span></div>`;
+    }
+    async function sendChat(event) {
+      event.preventDefault();
+      const input = $("chatInput");
+      const button = $("chatSend");
+      const message = input.value.trim();
+      if (!message && !pendingChatImages.length) return;
+      const prompt = message || "Please describe the attached image.";
+      button.disabled = true;
+      try {
+        await api("/ai/chat", { method: "POST", body: JSON.stringify({
+          message: prompt,
+          images: pendingChatImages.map((image) => ({ media_type: image.media_type, data: image.data }))
+        }) });
+        pendingChatImages = [];
+        input.value = "";
+        await chat();
+      } catch (error) {
+        const panel = $("chatMessages");
+        panel.insertAdjacentHTML("beforeend", `<div class="notice warning">${esc(error.message)}</div>`);
+        panel.scrollTop = panel.scrollHeight;
+      } finally {
+        button.disabled = false;
+      }
+    }
+    async function handleChatImages(event) {
+      const input = event.target;
+      const files = Array.from(input.files || []);
+      input.value = "";
+      if (pendingChatImages.length + files.length > 4) {
+        alert("Attach no more than 4 images to one message.");
+        return;
+      }
+      for (const file of files) {
+        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+          alert(`${file.name}: choose a JPEG, PNG, or WebP image.`);
+          continue;
+        }
+        if (!file.size || file.size > 2 * 1024 * 1024) {
+          alert(`${file.name}: each image must be smaller than 2 MB.`);
+          continue;
+        }
+        try {
+          const preview = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(new Error(`Could not read ${file.name}.`));
+            reader.readAsDataURL(file);
+          });
+          pendingChatImages.push({
+            name: file.name,
+            media_type: file.type,
+            data: String(preview).split(",")[1],
+            preview: String(preview)
+          });
+        } catch (error) { alert(error.message); }
+      }
+      renderPendingChatImages();
+    }
+    function renderPendingChatImages() {
+      const preview = $("chatImagePreview");
+      if (!preview) return;
+      preview.innerHTML = pendingChatImages.map((image, index) =>
+        `<div class="card" style="padding:8px;display:flex;align-items:center;gap:8px"><img src="${esc(image.preview)}" alt="${esc(image.name)}" style="width:64px;height:64px;object-fit:cover;border-radius:8px"><span class="hint">${esc(image.name)}</span><button class="btn ghost small-btn" type="button" aria-label="Remove ${esc(image.name)}" onclick="removeChatImage(${index})">Remove</button></div>`
+      ).join("");
+    }
+    function removeChatImage(index) {
+      pendingChatImages.splice(index, 1);
+      renderPendingChatImages();
+    }
+    async function clearChat() {
+      if (!confirm("Clear the dashboard chat history? This cannot be undone.")) return;
+      await api("/ai/chat", { method: "DELETE" });
+      await chat();
+    }
+    async function contentPage() {
+      const data = await api("/content");
+      if (currentPage !== "content") return;
+      setPageActions('<button class="btn" data-action="new-content">＋ New content</button>');
+      const cards = data.items.map((item) => `<article class="card content-card" data-status="${esc(item.status)}" data-platform="${esc(item.platform)}">
+        <div class="card-head"><div><h2>${esc(item.title)}</h2><p class="hint">${esc(item.platform)} · Created ${esc(item.created_at)}${item.scheduled_at ? ` · Scheduled ${esc(item.scheduled_at)}` : ""}</p></div>${pill(item.status)}</div>
+        <p>${esc(item.body)}</p>${item.media_url ? `<a class="small" href="${esc(item.media_url)}" target="_blank" rel="noopener noreferrer">Preview media</a>` : ""}
+        <div class="list-actions">${item.status === "awaiting_approval" || item.status === "draft" ? `<button class="btn secondary small-btn" onclick="contentAction('${esc(item.id)}','approve')">Approve</button><button class="btn ghost small-btn" onclick="contentAction('${esc(item.id)}','reject')">Reject</button>` : ""}
+        ${item.status === "approved" ? `<button class="btn small-btn" onclick="contentAction('${esc(item.id)}','publish')">Queue publish</button>` : ""}
+        <button class="btn danger small-btn" onclick="deleteContent('${esc(item.id)}')">Delete</button></div></article>`).join("");
+      $content.innerHTML = `<div class="content-toolbar"><div><label class="sr-only" for="contentStatusFilter">Filter by status</label><select id="contentStatusFilter" class="field compact-select" onchange="filterContent()"><option value="all">All statuses</option><option value="draft">Draft</option><option value="awaiting_approval">Pending approval</option><option value="approved">Approved</option><option value="queued">Scheduled or queued</option><option value="published">Published</option><option value="failed">Failed</option></select><label class="sr-only" for="contentPlatformFilter">Filter by platform</label><select id="contentPlatformFilter" class="field compact-select" onchange="filterContent()"><option value="all">All platforms</option><option value="telegram">Telegram</option><option value="facebook">Facebook</option><option value="instagram">Instagram</option><option value="whatsapp">WhatsApp</option><option value="draft">Draft only</option></select></div><span class="hint">${data.items.length} item(s)</span></div>
+        <details id="newContent" class="card editor-panel"><summary class="details-summary"><span><strong>Create content</strong><small>Write a post, choose where it goes, then save it or send it for review.</small></span><span class="summary-chevron">＋</span></summary>
+        <form class="form-grid" onsubmit="createContent(event)"><div><label class="field-label" for="contentTitle">Title</label><input id="contentTitle" class="field" maxlength="240" required></div>
+        <div><label class="field-label" for="contentCategory">Content category</label><select id="contentCategory" class="field"><option value="general">General</option><option value="news">News</option><option value="community">Community updates</option><option value="heritage">History &amp; heritage</option><option value="education">Educational</option><option value="announcement">Announcement</option><option value="promotional">Promotional</option><option value="sensitive_political">Sensitive political</option><option value="conflict">Conflict reporting</option><option value="humanitarian_emergency">Humanitarian emergency</option><option value="breaking_news">Unverified breaking news</option><option value="major_statement">Major official statement</option><option value="financial_commitment">Financial commitment</option></select></div>
+        <div class="wide"><label class="field-label">Where should it go?</label><div class="platform-picker"><label><input name="contentPlatform" type="checkbox" value="telegram"> Telegram</label><label><input name="contentPlatform" type="checkbox" value="facebook"> Facebook</label><label><input name="contentPlatform" type="checkbox" value="instagram"> Instagram</label><label><input name="contentPlatform" type="checkbox" value="whatsapp"> WhatsApp</label><label><input name="contentPlatform" type="checkbox" value="naath_heritage"> Website</label></div></div>
+        <div class="wide"><label class="field-label" for="contentBody">Post text</label><textarea id="contentBody" class="field content-editor" rows="7" maxlength="20000" placeholder="Write your post here…" required></textarea><p class="hint">You can add hashtags and links directly in your post text.</p></div>
+        <div><label class="field-label" for="contentMedia">Public media URL (optional)</label><input id="contentMedia" class="field" type="url"></div><div><label class="field-label" for="contentLink">Link URL (optional)</label><input id="contentLink" class="field" type="url"></div>
+        <div><label class="field-label" for="contentScheduled">Schedule (optional)</label><input id="contentScheduled" class="field" type="datetime-local"></div>
+        <details class="wide advanced-options"><summary>Sources and advanced options</summary><div class="section"><label class="field-label" for="contentSources">Source URLs (optional, one per line)</label><textarea id="contentSources" class="field" rows="3" placeholder="https://…"></textarea></div></details>
+        <div class="wide row"><button class="btn secondary" type="submit" name="contentAction" value="save">Save draft</button><button class="btn" type="submit" name="contentAction" value="submit">Submit for approval</button></div></form></details>
+        <section class="content-list section">${cards || empty("No content yet. Select Create content to get started.")}</section>`;
+      filterContent();
+    }
+    function filterContent() {
+      const status = $("contentStatusFilter")?.value || "all";
+      const platform = $("contentPlatformFilter")?.value || "all";
+      document.querySelectorAll(".content-card").forEach((card) => {
+        card.classList.toggle("hidden", (status !== "all" && card.dataset.status !== status)
+          || (platform !== "all" && card.dataset.platform !== platform));
+      });
+    }
+    async function createContent(event) {
+      event.preventDefault();
+      const needsApproval = event.submitter?.value === "submit" || !event.submitter;
+      const platforms = [...document.querySelectorAll('input[name="contentPlatform"]:checked')].map((input) => input.value);
+      const scheduled = $("contentScheduled").value
+        ? new Date($("contentScheduled").value).toISOString()
+        : null;
+      const sourceUrls = $("contentSources").value.split(/\r?\n/).map((url) => url.trim()).filter(Boolean);
+      await api("/content", { method: "POST", body: JSON.stringify({
+        title: $("contentTitle").value, body: $("contentBody").value,
+        platform: platforms[0] || "draft", platforms: platforms.length ? platforms : ["draft"],
+        media_url: $("contentMedia").value || null,
+        link_url: $("contentLink").value || null, require_approval: needsApproval,
+        category: $("contentCategory").value, scheduled_at: scheduled, source_urls: sourceUrls
+      }) });
+      await loadPage("content");
+    }
+    async function contentAction(id, action) {
+      if (action === "publish" && !confirm("Queue this approved content using the configured platform API?")) return;
+      await api(`/content/${encodeURIComponent(id)}/${action}`, { method: "POST" });
+      await loadPage(currentPage);
+      await refreshStatus();
+    }
+    async function deleteContent(id) {
+      if (!confirm("Delete this content item permanently?")) return;
+      await api(`/content/${encodeURIComponent(id)}`, { method: "DELETE" });
+      await loadPage(currentPage);
+      await refreshStatus();
+    }
+    async function social() {
+      const [data, contentData, publicationData, policyData] = await Promise.all([
+        api("/integrations"), api("/content"), api("/publications"), api("/publishing/policies")
+      ]);
+      if (currentPage !== "social") return;
+      const published = contentData.items.filter((item) => item.status === "published").length;
+      const queue = contentData.items.filter((item) => item.status === "queued").length;
+      const integrations = data.integrations;
+      const failedPublications = publicationData.publications.filter((item) => item.status === "failed").length;
+      const scheduleCount = publicationData.publications.filter((item) => ["scheduled", "queued", "awaiting_approval"].includes(item.status)).length;
+      const platformLabels = { all: "All Connections", telegram: "Telegram", facebook: "Facebook Pages", instagram: "Instagram", whatsapp: "WhatsApp", other: "Other Channels" };
+      const visibleIntegrations = integrations.filter((item) => {
+        if (socialPlatformFilter === "all") return true;
+        if (socialPlatformFilter === "other") return !["telegram", "facebook", "instagram", "whatsapp"].includes(item.platform);
+        return item.platform === socialPlatformFilter;
+      });
+      const rows = visibleIntegrations.map((item) => `<div class="list-item"><span class="metric-icon">◉</span><div class="list-item-main"><strong>${esc(item.name)} · ${esc(item.platform)}</strong><small>${esc(item.webhook_path ? `Webhook: ${item.webhook_path}` : "Publishing connection")} · Updated ${esc(item.updated_at)}</small></div>${pill(item.enabled ? item.status : "disabled")}<div class="list-actions"><button class="btn secondary small-btn" onclick="testIntegration('${esc(item.platform)}')">Test</button></div></div>`).join("");
+      const accountView = `<article class="card section"><div class="card-head"><div><h2>${esc(platformLabels[socialPlatformFilter])} connections</h2><p class="hint">Connection details and status are read from configured integrations.</p></div></div><div class="list">${rows || empty(socialPlatformFilter === "all" ? "No accounts connected yet. Choose Connect an account to begin." : `No ${esc(platformLabels[socialPlatformFilter])} are configured yet.`)}</div></article>
+        <article class="card section"><div class="card-head"><div><h2>Connect an account</h2><p class="hint">Choose a service and follow its setup steps. Credentials are encrypted when saved.</p></div></div>
+        <div class="platform-picker connect-platforms"><button type="button" class="btn secondary" onclick="chooseIntegration('telegram')">✈️ Telegram</button><button type="button" class="btn secondary" onclick="chooseIntegration('facebook')">📘 Facebook Page</button><button type="button" class="btn secondary" onclick="chooseIntegration('instagram')">📸 Instagram Business</button><button type="button" class="btn secondary" onclick="chooseIntegration('whatsapp')">💬 WhatsApp</button></div>
+        <form class="form-grid" onsubmit="saveIntegration(event)">
+        <div><label class="field-label" for="integrationPlatform">Platform</label><select id="integrationPlatform" class="field" onchange="updateIntegrationForm()"><option value="telegram">Telegram</option><option value="facebook">Facebook Page</option><option value="instagram">Instagram Business</option><option value="whatsapp">WhatsApp Cloud API</option><option value="naath_heritage">Naath Heritage REST API</option><option value="custom_rest">Custom HTTPS REST API</option></select></div>
+        <div><label class="field-label" for="integrationName">Connection name</label><input id="integrationName" class="field" required placeholder="My Telegram bot"></div>
+        <div class="wide"><div id="integrationGuide" class="notice"></div></div>
+        <div><label id="integrationSecretLabel" class="field-label" for="integrationSecret">Access token</label><input id="integrationSecret" class="field" type="password" autocomplete="new-password"></div>
+        <div id="integrationAccountWrap"><label id="integrationAccountLabel" class="field-label" for="integrationAccountId">Account / chat ID</label><input id="integrationAccountId" class="field" placeholder="Paste the ID here"></div>
+        <div id="integrationRecipientWrap" class="hidden"><label class="field-label" for="integrationRecipient">Test recipient phone number</label><input id="integrationRecipient" class="field" placeholder="+1234567890"></div>
+        <div id="integrationMetaWrap" class="hidden"><label class="field-label" for="integrationAppSecret">Meta app secret</label><input id="integrationAppSecret" class="field" type="password" autocomplete="new-password"></div>
+        <div id="integrationVerifyWrap" class="hidden"><label class="field-label" for="integrationVerify">Webhook verify token</label><input id="integrationVerify" class="field" autocomplete="off" placeholder="Create a short private token"></div>
+        <div id="integrationRestWrap" class="hidden"><label class="field-label" for="integrationPublishUrl">Publish endpoint URL</label><input id="integrationPublishUrl" class="field" type="url" placeholder="https://example.com/api/content"></div>
+        <div class="wide row"><label class="hint"><input id="integrationEnabled" type="checkbox" checked> Enable integration</label><button class="btn" type="submit">Save connection</button></div></form></article>`;
+      const historyView = `<article class="card section"><div class="card-head"><div><h2>Publication history</h2><p class="hint">See what is waiting, published, or needs another attempt.</p></div></div>
+        <div class="list">${publicationData.publications.map((item) => listItem(`${item.title} · ${item.platform}`, `${item.scheduled_at || item.next_attempt_at || "No schedule"} · ${item.attempts || 0} attempt(s)${item.error_details ? ` · ${item.error_details}` : ""}`, pill(item.status),
+          `${item.status === "failed" || item.status === "cancelled" ? `<button class="btn secondary small-btn" onclick="publicationAction('${esc(item.id)}','retry')">Retry</button>` : ""}${item.status === "awaiting_approval" ? `<button class="btn small-btn" onclick="publicationAction('${esc(item.id)}','approve')">Approve</button><button class="btn ghost small-btn" onclick="publicationAction('${esc(item.id)}','reject')">Reject</button>` : ""}`)).join("") || empty("No publications yet.")}</div></article>`;
+      const policyView = `<article class="card section"><div class="card-head"><div><h2>Publishing rules</h2><p class="hint">Choose whether each type of post needs review before Nyamal publishes it.</p></div></div>
+        <div class="policy-explanations"><div><strong>Manual</strong><span>Nothing is published until you approve it.</span></div><div><strong>Approval required</strong><span>Nyamal prepares it; you approve before it goes out.</span></div><div><strong>Automatic</strong><span>Approved categories can publish without another review.</span></div></div>
+        <form class="form-grid section" onsubmit="savePublishingPolicy(event)">
+          <div><label class="field-label" for="policyPlatform">Platform</label><select id="policyPlatform" class="field"><option value="telegram">Telegram</option><option value="facebook">Facebook</option><option value="instagram">Instagram</option><option value="whatsapp">WhatsApp</option><option value="naath_heritage">Naath Heritage</option><option value="custom_rest">Custom REST</option></select></div>
+          <div><label class="field-label" for="policyCategory">Content category</label><select id="policyCategory" class="field"><option value="general">General</option><option value="news">News</option><option value="community">Community update</option><option value="heritage">History &amp; heritage</option><option value="education">Educational</option><option value="announcement">Announcement</option><option value="promotional">Promotional</option><option value="sensitive_political">Sensitive political</option><option value="conflict">Conflict reporting</option><option value="humanitarian_emergency">Humanitarian emergency</option><option value="breaking_news">Unverified breaking news</option><option value="major_statement">Major official statement</option><option value="financial_commitment">Financial commitment</option></select></div>
+          <div><label class="field-label" for="policyMode">Publishing mode</label><select id="policyMode" class="field"><option value="manual">Manual</option><option value="supervised">Approval required</option><option value="autonomous">Automatic</option></select></div>
+          <div class="wide"><button class="btn" type="submit">Save publishing rule</button></div></form>
+        <div class="list section">${policyData.policies.map((item) => listItem(`${item.platform} · ${item.category}`, `Updated ${item.updated_at}`, pill(item.mode === "supervised" ? "Approval required" : item.mode === "autonomous" ? "Automatic" : "Manual"))).join("") || empty("No rules set. Manual approval is used by default.")}</div></article>`;
+      const tabs = `<nav class="section-tabs" aria-label="Social media sections"><button type="button" class="${socialTab === "accounts" ? "active" : ""}" onclick="setSocialTab('accounts')">Accounts</button><button type="button" class="${socialTab === "history" ? "active" : ""}" onclick="setSocialTab('history')">Publishing history</button><button type="button" class="${socialTab === "policies" ? "active" : ""}" onclick="setSocialTab('policies')">Publishing rules</button></nav>`;
+      $content.innerHTML = `<section class="grid dashboard-metrics"><article class="metric-card"><span class="metric-label">Connected accounts</span><strong class="metric">${integrations.filter((item) => item.enabled).length}</strong></article><article class="metric-card"><span class="metric-label">Published posts</span><strong class="metric">${published}</strong></article><article class="metric-card"><span class="metric-label">Scheduled or queued</span><strong class="metric">${Math.max(queue, scheduleCount)}</strong></article><article class="metric-card"><span class="metric-label">Failed posts</span><strong class="metric">${failedPublications}</strong></article></section>${tabs}${socialTab === "accounts" ? accountView : socialTab === "history" ? historyView : policyView}<p class="hint section">Facebook and Instagram welcome people when they start a message conversation, not when they follow the account. Webhook subscriptions must be set up in Meta.</p>`;
+      if (socialTab === "accounts") {
+        if (socialPlatformFilter !== "all") {
+          const platform = socialPlatformFilter === "other" ? "custom_rest" : socialPlatformFilter;
+          if ([...$("integrationPlatform").options].some((option) => option.value === platform)) $("integrationPlatform").value = platform;
+        }
+        updateIntegrationForm();
+      }
+    }
+    async function setSocialTab(tab) {
+      if (!["accounts", "history", "policies"].includes(tab)) return;
+      socialTab = tab;
+      await social();
+    }
+    function chooseIntegration(platform) {
+      $("integrationPlatform").value = platform;
+      updateIntegrationForm();
+      $("integrationPlatform").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    function updateIntegrationForm() {
+      const platform = $("integrationPlatform").value;
+      const meta = ["facebook", "instagram", "whatsapp"].includes(platform);
+      const rest = ["naath_heritage", "custom_rest"].includes(platform);
+      $("integrationMetaWrap").classList.toggle("hidden", !meta);
+      $("integrationVerifyWrap").classList.toggle("hidden", !meta);
+      $("integrationRecipientWrap").classList.toggle("hidden", platform !== "whatsapp");
+      $("integrationRestWrap").classList.toggle("hidden", !rest);
+      $("integrationAccountWrap").classList.toggle("hidden", rest);
+      const names = {
+        telegram: ["Bot token", "Telegram chat ID", "Paste the BotFather token, then paste the chat or channel ID Nyamal should publish to."],
+        facebook: ["Page access token", "Facebook Page ID", "Paste the Meta Page access token and the numeric Facebook Page ID."],
+        instagram: ["Instagram access token", "Instagram Business Account ID", "Paste the linked Instagram Business account's numeric ID and access token."],
+        whatsapp: ["WhatsApp access token", "Phone number ID", "Paste the WhatsApp Cloud API access token and Phone Number ID."],
+        naath_heritage: ["Website API key", "", "Paste the authorized website API key and publishing endpoint."],
+        custom_rest: ["REST API bearer key", "", "Paste the bearer key and HTTPS publishing endpoint."]
+      };
+      const [secretLabel, accountLabel, guide] = names[platform];
+      $("integrationSecretLabel").textContent = secretLabel;
+      $("integrationAccountLabel").textContent = accountLabel;
+      $("integrationGuide").textContent = guide;
+      const defaults = {
+        telegram: "My Telegram",
+        facebook: "My Facebook Page",
+        instagram: "My Instagram Business",
+        whatsapp: "My WhatsApp",
+        naath_heritage: "Naath Heritage Website",
+        custom_rest: "Custom Website"
+      };
+      if (!$("integrationName").value) $("integrationName").value = defaults[platform];
+    }
+    async function saveIntegration(event) {
+      event.preventDefault();
+      const platform = $("integrationPlatform").value;
+      const accountId = $("integrationAccountId").value.trim();
+      const config = {};
+      if (platform === "telegram") config.chat_id = accountId;
+      if (platform === "facebook") config.page_id = accountId;
+      if (platform === "instagram") config.ig_user_id = accountId;
+      if (platform === "whatsapp") {
+        config.phone_number_id = accountId;
+        config.recipient = $("integrationRecipient").value.trim();
+      }
+      if (platform === "naath_heritage" || platform === "custom_rest") {
+        config.publish_url = $("integrationPublishUrl").value.trim();
+        config.force_draft = true;
+      }
+      await api("/integrations", { method: "POST", body: JSON.stringify({
+        platform,
+        name: $("integrationName").value.trim(),
+        secret: $("integrationSecret").value || null,
+        app_secret: $("integrationAppSecret").value || null,
+        verify_token: $("integrationVerify").value || null,
+        config,
+        enabled: $("integrationEnabled").checked
+      }) });
+      await loadPage("social");
+    }
+    async function testIntegration(platform) {
+      try {
+        const result = await api(`/integrations/${encodeURIComponent(platform)}/test`, { method: "POST" });
+        alert(`Connection status: ${result.status}${result.account?.name ? ` · ${result.account.name}` : ""}${result.bot ? ` · @${result.bot}` : ""}`);
+      } catch (error) { alert(`Connection test failed: ${error.message}`); }
+    }
+    async function savePublishingPolicy(event) {
+      event.preventDefault();
+      await api("/publishing/policies", { method: "POST", body: JSON.stringify({
+        platform: $("policyPlatform").value,
+        category: $("policyCategory").value,
+        mode: $("policyMode").value
+      }) });
+      await loadPage("social");
+    }
+    async function publicationAction(id, action) {
+      if (action === "cancel" && !confirm("Cancel this publication?")) return;
+      await api(`/publications/${encodeURIComponent(id)}/${action}`, { method: "POST" });
+      await loadPage("social");
+      await refreshStatus();
+    }
+    async function community() {
+      const [settingsData, overviewData, incidentData, welcomeBatchData] = await Promise.all([
+        api("/community/settings"), api("/community/overview"), api("/community/incidents?limit=100"),
+        api("/community/welcome/batches?limit=30")
+      ]);
+      if (currentPage !== "community") return;
+      const settings = settingsData.settings;
+      const incidents = incidentData.incidents.filter((item) => ["pending", "failed"].includes(item.status));
+      const welcomeBatches = welcomeBatchData.batches;
+      const activity = overviewData.recent_activity.map((item) =>
+        listItem(`${item.platform} · ${item.event_type.replaceAll("_", " ")}`,
+          `${item.created_at}${item.actor_id ? ` · ${item.actor_id}` : ""}${item.details ? ` · ${item.details}` : ""}`,
+          pill("Recorded"), "")
+      ).join("");
+      const incidentCards = incidents.map((item) => {
+        const canApprove = item.kind === "response" && item.proposed_response;
+        const canDelete = item.kind === "moderation" && item.platform === "telegram";
+        const actions = `${canApprove ? `<button class="btn small-btn" onclick="communityIncidentAction('${esc(item.id)}','approve')">Approve &amp; send</button>` : ""}${canDelete ? `<button class="btn danger small-btn" onclick="communityIncidentAction('${esc(item.id)}','delete')">Delete Telegram message</button>` : ""}<button class="btn secondary small-btn" onclick="communityIncidentAction('${esc(item.id)}','dismiss')">Dismiss</button>`;
+        return `<article class="card section"><div class="card-head"><div><h3>${esc(item.platform)} · ${esc(item.kind.replaceAll("_", " "))}</h3><p class="hint">${esc(item.reason)}</p></div>${pill(item.risk)} ${pill(item.status)}</div><p class="hint"><strong>Incoming message</strong></p><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(item.message_text || "(No text)")}</p>${item.proposed_response ? `<p class="hint"><strong>Suggested reply</strong></p><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(item.proposed_response)}</p>` : ""}${item.last_error ? `<div class="notice warning">${esc(item.last_error)}</div>` : ""}<div class="list-actions section">${actions}</div></article>`;
+      }).join("");
+      const welcomeBatchRows = welcomeBatches.map((batch) => {
+        const retry = batch.status === "failed" && batch.safe_to_retry
+          ? `<button class="btn secondary small-btn" onclick="retryWelcomeBatch('${esc(batch.id)}')">Retry safely</button>`
+          : "";
+        const description = `${batch.member_count} member(s) · ${batch.message_count} message part(s) · ${batch.created_at}${batch.last_error ? ` · ${batch.last_error}` : ""}`;
+        return listItem(`Telegram welcome · chat ${batch.chat_id}`, description, pill(batch.status), retry);
+      }).join("");
+      const activityCounts = overviewData.activity_7d || {};
+      $content.innerHTML = `<div class="notice">Telegram welcomes use real Bot API join updates, persistent batching, duplicate protection, and the background worker. Make Nyamal a group administrator, then register the webhook below to receive chat-member and join-request updates. Telegram group replies require Level 3 or higher and only trigger on a mention or reply. Facebook, Instagram, and WhatsApp replies require their supported Meta inbox webhooks and permissions.</div>
+        <div class="grid dashboard-metrics section">
+          <article class="card"><span class="metric-icon">◎</span><div class="metric">${overviewData.connected_platforms}</div><div class="metric-label">Enabled platforms</div></article>
+          <article class="card"><span class="metric-icon">!</span><div class="metric">${overviewData.pending_incidents}</div><div class="metric-label">Messages needing review</div></article>
+          <article class="card"><span class="metric-icon">↗</span><div class="metric">${activityCounts.response_sent || 0}</div><div class="metric-label">Replies actually sent · 7 days</div></article>
+          <article class="card"><span class="metric-icon">👋</span><div class="metric">${activityCounts.member_welcomed || 0}</div><div class="metric-label">Members welcomed · 7 days</div></article>
+        </div>
+        <article class="card section"><div class="card-head"><div><h2>Community behavior</h2><p class="hint">Level 1 queues all replies. Level 2 allows safe private/social replies; Level 3 also allows Telegram group replies only to mentions. Level 4 can delete exact blocked Telegram links only when the separate option is enabled. Sensitive topics and uncertain links always need review.</p></div></div>
+          <form class="form-grid" onsubmit="saveCommunitySettings(event)">
+            <div><label class="field-label" for="communityAutonomy">Autonomy level</label><select class="field" id="communityAutonomy"><option value="1">Level 1 · Approve every reply</option><option value="2">Level 2 · Safe DMs and welcomes</option><option value="3">Level 3 · Also answer Telegram mentions</option><option value="4">Level 4 · Also allow optional blocklist deletion</option></select></div>
+            <div><label class="field-label" for="communityReplyLimit">Max automatic replies per person per hour (1–20)</label><input class="field" id="communityReplyLimit" type="number" min="1" max="20" required></div>
+            <div class="wide"><label class="field-label" for="communityWelcome">Welcome message · supports {name}, {community}, {rules}</label><textarea class="field" id="communityWelcome" rows="3" maxlength="1000"></textarea></div>
+            <div class="wide"><h3>Telegram group welcomes</h3><p class="hint">One person receives an individual welcome; two or more members in the configured window receive one collective welcome. The background Worker processes the queue even when this dashboard is closed.</p></div>
+            <div><label class="field-label" for="welcomeBatchWindow">Join-event batch window</label><select class="field" id="welcomeBatchWindow"><option value="0">Immediate</option><option value="5">5 seconds</option><option value="10">10 seconds</option><option value="15">15 seconds</option><option value="30">30 seconds</option></select></div>
+            <div><label class="field-label" for="welcomeStyle">Welcome message style</label><select class="field" id="welcomeStyle"><option value="warm">Warm and friendly</option><option value="concise">Short and concise</option><option value="celebratory">Celebratory</option></select></div>
+            <div><label class="field-label" for="welcomeFrequency">Maximum welcome messages per group per hour (1–100)</label><input class="field" id="welcomeFrequency" type="number" min="1" max="100" required><p class="hint">A batched announcement counts once, even if split to respect Telegram's message limit.</p></div>
+            <div><label class="field-label">Welcome behavior</label>
+              <label class="check-row"><input id="welcomeIndividualEnabled" type="checkbox"> Individual welcomes</label>
+              <label class="check-row"><input id="welcomeCollectiveEnabled" type="checkbox"> Collective welcomes</label>
+              <label class="check-row"><input id="welcomeMentionMembers" type="checkbox"> Mention members when possible</label>
+            </div>
+            <div><label class="field-label">Member handling</label>
+              <label class="check-row"><input id="welcomeIgnoreBots" type="checkbox"> Ignore bot accounts</label>
+              <label class="check-row"><input id="welcomeReturningMembers" type="checkbox"> Welcome returning members again</label>
+              <label class="check-row"><input id="welcomeAdminInvitees" type="checkbox"> Welcome administrator-added members</label>
+            </div>
+            <div><label class="field-label">Optional welcome details</label>
+              <label class="check-row"><input id="welcomeIncludeDescription" type="checkbox"> Include community description</label>
+              <label class="check-row"><input id="welcomeIncludeRules" type="checkbox"> Include community rules</label>
+              <label class="check-row"><input id="welcomeIncludeLinks" type="checkbox"> Include useful links</label>
+              <label class="check-row"><input id="welcomeIncludeQuestions" type="checkbox"> Include onboarding question</label>
+            </div>
+            <div class="wide"><label class="field-label" for="telegramWelcomeIndividualTemplate">Individual welcome template · supports {name}, {join_context}, {community}, {rules}, {links}, {questions}</label><textarea class="field" id="telegramWelcomeIndividualTemplate" rows="3" maxlength="1200"></textarea></div>
+            <div class="wide"><label class="field-label" for="telegramWelcomeGroupTemplate">Collective welcome template · supports {member_list}, {join_context}, {community}, {rules}, {links}, {questions}</label><textarea class="field" id="telegramWelcomeGroupTemplate" rows="4" maxlength="1500"></textarea></div>
+            <div class="wide"><label class="field-label" for="welcomeUsefulLinks">Useful public links (only included when enabled above)</label><textarea class="field" id="welcomeUsefulLinks" rows="2" maxlength="1500" placeholder="Add public community resources. Private Telegram invite details are never exposed."></textarea></div>
+            <div class="wide"><label class="field-label" for="welcomeOnboardingQuestions">Optional onboarding question (only included when enabled above)</label><textarea class="field" id="welcomeOnboardingQuestions" rows="2" maxlength="1000" placeholder="For example: What topics are you most interested in?"></textarea></div>
+            <div class="wide"><label class="field-label" for="communityDescription">Community description</label><textarea class="field" id="communityDescription" rows="2" maxlength="2000" placeholder="What is this community about?"></textarea></div>
+            <div class="wide"><label class="field-label" for="communityRules">Community rules</label><textarea class="field" id="communityRules" rows="3" maxlength="4000" placeholder="Rules Nyamal should follow and explain."></textarea></div>
+            <div class="wide"><label class="field-label" for="communityKnowledge">Verified facts and frequently asked questions</label><textarea class="field" id="communityKnowledge" rows="4" maxlength="8000" placeholder="Add only information you have verified. Nyamal is instructed not to invent missing facts."></textarea></div>
+            <div><label class="field-label" for="communityTelegramMode">Telegram group replies</label><select class="field" id="communityTelegramMode"><option value="mention_only">Only when mentioned or replied to</option><option value="disabled">Do not reply in groups</option></select></div>
+            <div><label class="field-label">Social inbox replies</label><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input id="communitySocialReplies" type="checkbox"> Allow automatic replies when autonomy is 2–4</label></div>
+            <div><label class="field-label">Welcome new members / first-time senders</label><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input id="communityWelcomeEnabled" type="checkbox"> Send the configured welcome message</label></div>
+            <div><label class="field-label">Link protection</label><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input id="communityLinkProtection" type="checkbox"> Check links against these lists and common scam patterns</label></div>
+            <div class="wide"><label class="field-label" for="communityTrustedDomains">Trusted domains · comma-separated hostnames</label><input class="field" id="communityTrustedDomains" placeholder="example.org, partner.example.com"></div>
+            <div class="wide"><label class="field-label" for="communityBlockedDomains">Blocked domains · comma-separated hostnames</label><input class="field" id="communityBlockedDomains" placeholder="known-bad.example"></div>
+            <div><label style="display:flex;align-items:center;gap:8px"><input id="communityAutoDelete" type="checkbox"> Automatically delete exact blocklist matches in Telegram</label><p class="hint">Off by default. Requires bot admin permissions; uncertain links are never automatically deleted.</p></div>
+            <div><label style="display:flex;align-items:center;gap:8px"><input id="communityNotifyAdmin" type="checkbox"> Notify the administrator about new reviews</label><p class="hint">Set NYAMAL_OWNER_TELEGRAM_ID to receive Telegram alerts.</p></div>
+            <div class="wide"><button class="btn" type="submit">Save community settings</button></div>
+          </form>
+          <section class="section"><h3>Preview and test</h3><p class="hint">Previews use sample names only. A test send is clearly labeled and does not create or record a member-join event.</p>
+            <div class="row"><button class="btn secondary" type="button" onclick="previewTelegramWelcome(1)">Preview one member</button><button class="btn secondary" type="button" onclick="previewTelegramWelcome(2)">Preview group</button></div>
+            <pre id="telegramWelcomePreview" class="notice welcome-preview section" aria-live="polite"></pre>
+            <div class="row section"><select id="welcomeTestType" class="field" aria-label="Welcome test type"><option value="individual">Individual welcome</option><option value="collective">Collective welcome</option></select><input id="welcomeTestChatId" class="field" placeholder="Telegram chat ID for test (for example, -100…)" aria-label="Telegram test chat ID"><button class="btn secondary" type="button" onclick="sendTelegramWelcomeTest()">Send test to Telegram</button></div>
+            <p id="welcomeTestMessage" class="hint" aria-live="polite"></p>
+            <div class="row section"><button class="btn ghost" type="button" onclick="registerWelcomeWebhook()">Register Telegram join updates</button><span id="welcomeWebhookMessage" class="hint" aria-live="polite"></span></div>
+          </section>
+        </article>
+        <article class="card section"><div class="card-head"><div><h2>Welcome delivery queue</h2><p class="hint">Failed sends are retryable only when Telegram confirmed that the message was not delivered. Ambiguous outcomes require a manual group check to prevent duplicates.</p></div></div><div class="list">${welcomeBatchRows || empty("No Telegram welcome batches are waiting or failed.")}</div></article>
+        <article class="card section"><div class="card-head"><div><h2>Review queue</h2><p class="hint">Approve suggested replies, dismiss items, or explicitly delete a flagged Telegram message.</p></div>${pill(incidents.length)}</div><div class="stack">${incidentCards || empty("No community messages need review.")}</div></article>
+        <article class="card section"><div class="card-head"><div><h2>Recent community activity</h2><p class="hint">Only recorded actions are shown here.</p></div></div><div class="list">${activity || empty("No community activity has been recorded yet.")}</div></article>`;
+      $("communityAutonomy").value = settings.autonomy_level;
+      $("communityReplyLimit").value = settings.max_auto_replies_per_sender_per_hour;
+      $("communityWelcome").value = settings.welcome_message;
+      $("welcomeBatchWindow").value = settings.welcome_batch_window_seconds;
+      $("welcomeStyle").value = settings.welcome_style;
+      $("welcomeFrequency").value = settings.welcome_max_messages_per_chat_per_hour;
+      $("welcomeIndividualEnabled").checked = settings.welcome_individual_enabled;
+      $("welcomeCollectiveEnabled").checked = settings.welcome_collective_enabled;
+      $("welcomeMentionMembers").checked = settings.welcome_mention_members;
+      $("welcomeIgnoreBots").checked = settings.welcome_ignore_bots;
+      $("welcomeReturningMembers").checked = settings.welcome_returning_members;
+      $("welcomeAdminInvitees").checked = settings.welcome_admin_invitees;
+      $("welcomeIncludeDescription").checked = settings.welcome_include_description;
+      $("welcomeIncludeRules").checked = settings.welcome_include_rules;
+      $("welcomeIncludeLinks").checked = settings.welcome_include_links;
+      $("welcomeIncludeQuestions").checked = settings.welcome_include_onboarding_questions;
+      $("telegramWelcomeIndividualTemplate").value = settings.telegram_welcome_individual_template;
+      $("telegramWelcomeGroupTemplate").value = settings.telegram_welcome_group_template;
+      $("welcomeUsefulLinks").value = settings.welcome_useful_links;
+      $("welcomeOnboardingQuestions").value = settings.welcome_onboarding_questions;
+      $("communityDescription").value = settings.community_description;
+      $("communityRules").value = settings.community_rules;
+      $("communityKnowledge").value = settings.knowledge_base;
+      $("communityTelegramMode").value = settings.telegram_group_replies;
+      $("communitySocialReplies").checked = settings.social_auto_replies;
+      $("communityWelcomeEnabled").checked = settings.welcome_enabled;
+      $("communityLinkProtection").checked = settings.link_protection;
+      $("communityTrustedDomains").value = settings.trusted_domains.join(", ");
+      $("communityBlockedDomains").value = settings.blocked_domains.join(", ");
+      $("communityAutoDelete").checked = settings.auto_delete_blocked_telegram_links;
+      $("communityNotifyAdmin").checked = settings.notify_admin;
+      previewTelegramWelcome(1);
+    }
+    async function saveCommunitySettings(event) {
+      event.preventDefault();
+      const domains = (id) => $(id).value.split(",").map((domain) => domain.trim()).filter(Boolean);
+      try {
+        await api("/community/settings", { method: "PUT", body: JSON.stringify({
+          autonomy_level: Number($("communityAutonomy").value),
+          max_auto_replies_per_sender_per_hour: Number($("communityReplyLimit").value),
+          welcome_message: $("communityWelcome").value,
+          telegram_welcome_individual_template: $("telegramWelcomeIndividualTemplate").value,
+          telegram_welcome_group_template: $("telegramWelcomeGroupTemplate").value,
+          welcome_individual_enabled: $("welcomeIndividualEnabled").checked,
+          welcome_collective_enabled: $("welcomeCollectiveEnabled").checked,
+          welcome_batch_window_seconds: Number($("welcomeBatchWindow").value),
+          welcome_style: $("welcomeStyle").value,
+          welcome_mention_members: $("welcomeMentionMembers").checked,
+          welcome_include_rules: $("welcomeIncludeRules").checked,
+          welcome_include_description: $("welcomeIncludeDescription").checked,
+          welcome_include_links: $("welcomeIncludeLinks").checked,
+          welcome_include_onboarding_questions: $("welcomeIncludeQuestions").checked,
+          welcome_useful_links: $("welcomeUsefulLinks").value,
+          welcome_onboarding_questions: $("welcomeOnboardingQuestions").value,
+          welcome_ignore_bots: $("welcomeIgnoreBots").checked,
+          welcome_returning_members: $("welcomeReturningMembers").checked,
+          welcome_admin_invitees: $("welcomeAdminInvitees").checked,
+          welcome_max_messages_per_chat_per_hour: Number($("welcomeFrequency").value),
+          community_description: $("communityDescription").value,
+          community_rules: $("communityRules").value,
+          knowledge_base: $("communityKnowledge").value,
+          telegram_group_replies: $("communityTelegramMode").value,
+          social_auto_replies: $("communitySocialReplies").checked,
+          welcome_enabled: $("communityWelcomeEnabled").checked,
+          link_protection: $("communityLinkProtection").checked,
+          trusted_domains: domains("communityTrustedDomains"),
+          blocked_domains: domains("communityBlockedDomains"),
+          auto_delete_blocked_telegram_links: $("communityAutoDelete").checked,
+          notify_admin: $("communityNotifyAdmin").checked
+        }) });
+        await loadPage("community");
+        alert("Community settings saved.");
+      } catch (error) { alert(`Could not save community settings: ${error.message}`); }
+    }
+    function previewTelegramWelcome(memberCount) {
+      const group = memberCount > 1;
+      const template = $(group ? "telegramWelcomeGroupTemplate" : "telegramWelcomeIndividualTemplate").value;
+      const memberList = group ? "John, Mary" : "";
+      const values = {
+        name: "John",
+        join_context: "We're glad you found us.",
+        member_list: memberList,
+        community: $("welcomeIncludeDescription").checked && $("communityDescription").value
+          ? `\n\n${$("communityDescription").value}` : "",
+        rules: $("welcomeIncludeRules").checked && $("communityRules").value
+          ? `\n\nCommunity rules: ${$("communityRules").value}` : "",
+        links: $("welcomeIncludeLinks").checked && $("welcomeUsefulLinks").value
+          ? `\n\nUseful links: ${$("welcomeUsefulLinks").value}` : "",
+        questions: $("welcomeIncludeQuestions").checked && $("welcomeOnboardingQuestions").value
+          ? `\n\n${$("welcomeOnboardingQuestions").value}` : ""
+      };
+      const enabled = $(group ? "welcomeCollectiveEnabled" : "welcomeIndividualEnabled").checked
+        && $("communityWelcomeEnabled").checked;
+      const text = enabled
+        ? template.replace(/\{([a-z_]+)\}/g, (_match, key) => values[key] || "")
+          .replace(/[ \t]+([,.!?])/g, "$1").replace(/,\s*!/g, "!").replace(/[ \t]{2,}/g, " ").trim()
+        : "This welcome type is disabled.";
+      $("telegramWelcomePreview").textContent = text || "The selected template does not produce a preview.";
+    }
+    async function sendTelegramWelcomeTest() {
+      const chatId = $("welcomeTestChatId").value.trim();
+      const status = $("welcomeTestMessage");
+      if (!chatId) { status.textContent = "Enter the target Telegram chat ID first."; return; }
+      if (!confirm(`Send a clearly labeled test welcome to Telegram chat ${chatId}?`)) return;
+      status.textContent = "Sending test…";
+      try {
+        const type = $("welcomeTestType").value;
+        await api("/community/welcome/test", { method: "POST", body: JSON.stringify({ chat_id: chatId, type }) });
+        status.textContent = "Test welcome sent. No member-join event was created or recorded.";
+      } catch (error) { status.textContent = `Test send failed: ${error.message}`; }
+    }
+    async function registerWelcomeWebhook() {
+      const status = $("welcomeWebhookMessage");
+      status.textContent = "Registering Telegram webhook…";
+      try {
+        await api("/telegram/webhook", { method: "POST" });
+        status.textContent = "Webhook registered with member-join updates. Confirm Nyamal is a group administrator.";
+      } catch (error) { status.textContent = `Webhook registration failed: ${error.message}`; }
+    }
+    async function retryWelcomeBatch(id) {
+      if (!confirm("Retry this welcome batch? Only sends known not to have reached Telegram are eligible.")) return;
+      try {
+        await api(`/community/welcome/batches/${encodeURIComponent(id)}/retry`, { method: "POST" });
+        await loadPage("community");
+      } catch (error) { alert(`Welcome retry failed: ${error.message}`); }
+    }
+    async function communityIncidentAction(id, action) {
+      if (action === "delete" && !confirm("Delete this Telegram message? This action cannot be undone.")) return;
+      if (action === "dismiss" && !confirm("Dismiss this review item?")) return;
+      try {
+        await api(`/community/incidents/${encodeURIComponent(id)}/${action}`, { method: "POST" });
+        await loadPage("community");
+      } catch (error) { alert(`Community action failed: ${error.message}`); }
+    }
+    async function approvals() {
+      const [contentData, taskData] = await Promise.all([
+        api("/content"), api("/tasks?status=Awaiting%20Approval&limit=100")
+      ]);
+      if (currentPage !== "approvals") return;
+      const allItems = contentData.items;
+      const pendingItems = allItems.filter((item) => item.status === "awaiting_approval" || item.status === "draft");
+      const approvedItems = allItems.filter((item) => item.status === "approved" || item.status === "published");
+      const rejectedItems = allItems.filter((item) => item.status === "rejected");
+      const historyItems = allItems.filter((item) => !["awaiting_approval", "draft"].includes(item.status));
+      const items = approvalTab === "pending" ? pendingItems : approvalTab === "approved" ? approvedItems
+        : approvalTab === "rejected" ? rejectedItems : historyItems;
+      const contentRows = items.map((item) => `<article class="approval-item"><div class="approval-preview"><span>${esc(item.platform)}</span>${pill(item.status)}</div><h3>${esc(item.title)}</h3><p>${esc(item.body.slice(0, 260))}${item.body.length > 260 ? "…" : ""}</p><small>${esc(item.created_at)} · ${esc(item.category || "General")}</small><div class="list-actions">${approvalTab === "pending" ? `<button class="btn secondary small-btn" onclick="contentAction('${esc(item.id)}','approve')">Approve</button><button class="btn ghost small-btn" onclick="contentAction('${esc(item.id)}','reject')">Reject</button>` : ""}${item.status === "approved" ? `<button class="btn small-btn" onclick="contentAction('${esc(item.id)}','publish')">Queue publish</button>` : ""}</div></article>`).join("");
+      const taskRows = taskData.tasks.map((task) => listItem(task.name, `${task.task_type} · ${task.created_at}`, pill(task.status), `<button class="btn secondary small-btn" onclick="taskAction('${esc(task.id)}','approve')">Approve</button><button class="btn danger small-btn" onclick="taskAction('${esc(task.id)}','reject')">Reject</button>`)).join("");
+      const tabLabels = { pending: `Pending (${pendingItems.length + taskData.tasks.length})`, approved: `Approved (${approvedItems.length})`, rejected: `Rejected (${rejectedItems.length})`, history: "History" };
+      $content.innerHTML = `<nav class="section-tabs" aria-label="Approval views">${Object.entries(tabLabels).map(([key, label]) => `<button type="button" class="${approvalTab === key ? "active" : ""}" onclick="setApprovalTab('${key}')">${label}</button>`).join("")}</nav>
+        ${approvalTab === "pending" ? `<article class="card section"><div class="card-head"><div><h2>Tasks waiting for approval</h2><p class="hint">Review these before Nyamal runs them.</p></div>${pill(taskData.tasks.length)}</div><div class="list">${taskRows || empty("No tasks need approval.")}</div></article>` : ""}
+        <section class="approval-grid section">${contentRows || empty(approvalTab === "pending" ? "Nothing is waiting for your review." : `No ${approvalTab} content yet.`)}</section>`;
+    }
+    async function setApprovalTab(tab) {
+      if (!["pending", "approved", "rejected", "history"].includes(tab)) return;
+      approvalTab = tab;
+      await approvals();
+    }
+    async function taskAction(id, action) {
+      await api(`/tasks/${encodeURIComponent(id)}/${action}`, { method: "POST" });
+      await loadPage(currentPage);
+      await refreshStatus();
+    }
+    async function automation() {
+      const [data, contentData, integrationData] = await Promise.all([
+        api("/tasks?limit=250"), api("/content"), api("/integrations")
+      ]);
+      if (currentPage !== "automation") return;
+      const tasks = data.tasks;
+      const connected = new Set(integrationData.integrations
+        .filter((item) => item.enabled && item.has_secret)
+        .map((item) => item.platform));
+      const approvedContent = contentData.items.filter((item) =>
+        item.status === "approved" && item.platform !== "draft" && connected.has(item.platform));
+      const active = tasks.filter((task) => task.enabled && ["Pending", "Scheduled", "Running"].includes(task.status)).length;
+      const paused = tasks.filter((task) => task.status === "Paused" || !task.enabled).length;
+      const failed = tasks.filter((task) => task.status === "Failed").length;
+      const completed = tasks.filter((task) => task.status === "Completed").length;
+      const rows = tasks.map((task) => listItem(task.name, `${task.task_type} · ${task.status} · ${task.next_execution_at || "No next run"}`, pill(task.status),
+        `<button class="btn secondary small-btn" onclick="taskAction('${esc(task.id)}','run')">Run now</button>${task.enabled ? `<button class="btn ghost small-btn" onclick="taskAction('${esc(task.id)}','disable')">Disable</button>` : `<button class="btn ghost small-btn" onclick="taskAction('${esc(task.id)}','enable')">Enable</button>`}<button class="btn danger small-btn" onclick="taskAction('${esc(task.id)}','cancel')">Cancel</button>`)).join("");
+      $content.innerHTML = `<section class="grid dashboard-metrics"><article class="metric-card"><span class="metric-label">Active tasks</span><strong class="metric">${active}</strong></article><article class="metric-card"><span class="metric-label">Paused</span><strong class="metric">${paused}</strong></article><article class="metric-card"><span class="metric-label">Failed</span><strong class="metric">${failed}</strong></article><article class="metric-card"><span class="metric-label">Completed</span><strong class="metric">${completed}</strong></article></section>
+        <details class="card section automation-creator"><summary class="details-summary"><span><strong>Create an automation</strong><small>Choose a daily report or publish content you have approved.</small></span><span class="summary-chevron">＋</span></summary>
+        <p class="hint section">This Worker supports daily reports and approved publishing. It does not run arbitrary background jobs or custom schedules.</p>
+        <form class="form-grid section" onsubmit="createTask(event)"><div><label class="field-label" for="taskName">Name this automation</label><input id="taskName" class="field" maxlength="160" placeholder="For example, Publish the community update" required></div>
+        <div><label class="field-label" for="taskType">What should Nyamal do?</label><select id="taskType" class="field" onchange="toggleTaskPayload()"><option value="reports.daily">Prepare a daily operations report</option><option value="content.publish">Publish approved content</option></select></div>
+        <div id="publishContentField" class="hidden"><label class="field-label" for="publishContentId">Approved content</label><select id="publishContentId" class="field">${approvedContent.map((item) => `<option value="${esc(item.id)}">${esc(item.title)} · ${esc(item.platform)}</option>`).join("")}</select>${approvedContent.length ? "" : '<p class="hint">Approve a content item before scheduling a publish task.</p>'}</div>
+        <div class="wide row"><label class="hint"><input id="taskNeedsApproval" type="checkbox" checked> Ask me before it runs</label><button class="btn" type="submit">Create automation</button></div></form></details>
+        <article class="card section"><div class="card-head"><h2>Task queue</h2><button class="btn ghost small-btn" onclick="loadPage('automation')">Refresh</button></div><div class="list">${rows || empty("No tasks have been recorded.")}</div></article>`;
+    }
+    async function createTask(event) {
+      event.preventDefault();
+      const taskType = $("taskType").value;
+      if (taskType === "content.publish" && !$("publishContentId").value) {
+        throw new Error("Approve a content item before scheduling a publish task.");
+      }
+      const payload = taskType === "content.publish" ? { content_id: $("publishContentId").value } : {};
+      await api("/tasks", { method: "POST", body: JSON.stringify({
+        name: $("taskName").value, task_type: taskType, payload,
+        priority: 5, require_approval: $("taskNeedsApproval").checked
+      }) });
+      await loadPage("automation");
+      await refreshStatus();
+    }
+    function toggleTaskPayload() {
+      $("publishContentField").classList.toggle("hidden", $("taskType").value !== "content.publish");
+    }
+    async function activity() {
+      const data = await api("/audit");
+      if (currentPage !== "activity") return;
+      const logs = data.logs || [];
+      const rows = logs.map((log) => {
+        const category = String(log.action || "system").split(/[._]/)[0];
+        const status = /fail|error|reject/i.test(`${log.action} ${log.details}`) ? "Review needed" : "Recorded";
+        return `<tr class="activity-row" data-category="${esc(category.toLowerCase())}" data-date="${esc(String(log.created_at || "").slice(0, 10))}" data-search="${esc(`${log.actor} ${log.action} ${log.target || ""} ${log.details || ""}`.toLowerCase())}">
+          <td data-label="Activity">${esc(String(log.action || "Activity").replace(/[._]/g, " "))}</td><td data-label="User">${esc(log.actor || "System")}</td><td data-label="Category">${esc(category)}</td><td data-label="Date">${esc(log.created_at || "—")}</td><td data-label="Status">${pill(status)}</td>
+          <td data-label="Details"><details class="log-details"><summary>View details</summary><pre>${esc(log.details || "No additional details recorded.")}</pre></details></td></tr>`;
+      }).join("");
+      const categories = [...new Set(logs.map((log) => String(log.action || "system").split(/[._]/)[0].toLowerCase()))];
+      $content.innerHTML = `<article class="card"><div class="card-head"><div><h2>Activity history</h2><p class="hint">A readable record of changes and actions in your workspace.</p></div>${pill(`${logs.length} events`)}</div>
+        <div class="activity-filters"><label class="date-filter">Search activity<input id="activitySearch" class="field" type="search" placeholder="Search activity…" oninput="filterActivity()"></label><label class="date-filter">Category<select id="activityCategory" class="field compact-select" onchange="filterActivity()"><option value="all">All categories</option>${categories.map((category) => `<option value="${esc(category)}">${esc(category)}</option>`).join("")}</select></label><label class="date-filter">From <input id="activityFrom" class="field" type="date" onchange="filterActivity()"></label><label class="date-filter">To <input id="activityTo" class="field" type="date" onchange="filterActivity()"></label></div>
+        <div class="table-wrap"><table><thead><tr><th>Activity</th><th>User</th><th>Category</th><th>Date</th><th>Status</th><th>Details</th></tr></thead><tbody id="activityRows">${rows}</tbody></table></div>
+        <div class="pagination"><span id="activityPageLabel" class="hint"></span><div><button id="activityPrevious" class="btn secondary small-btn" type="button" onclick="changeActivityPage(-1)">Previous</button><button id="activityNext" class="btn secondary small-btn" type="button" onclick="changeActivityPage(1)">Next</button></div></div>
+        ${logs.length ? "" : empty("No activity has been recorded.")}</article>`;
+      activityPage = 0;
+      filterActivity();
+    }
+    let activityPage = 0;
+    const activityPageSize = 20;
+    function filterActivity(resetPage = true) {
+      if (resetPage) activityPage = 0;
+      const rows = [...document.querySelectorAll(".activity-row")];
+      const query = ($("activitySearch")?.value || "").trim().toLowerCase();
+      const category = $("activityCategory")?.value || "all";
+      const from = $("activityFrom")?.value || "";
+      const to = $("activityTo")?.value || "";
+      const matches = rows.filter((row) => (!query || row.dataset.search.includes(query))
+        && (category === "all" || row.dataset.category === category)
+        && (!from || row.dataset.date >= from) && (!to || row.dataset.date <= to));
+      const pages = Math.max(1, Math.ceil(matches.length / activityPageSize));
+      activityPage = Math.min(activityPage, pages - 1);
+      const visible = new Set(matches.slice(activityPage * activityPageSize, (activityPage + 1) * activityPageSize));
+      rows.forEach((row) => row.classList.toggle("hidden", !visible.has(row)));
+      if ($("activityPageLabel")) $("activityPageLabel").textContent = `${matches.length ? activityPage * activityPageSize + 1 : 0}–${Math.min((activityPage + 1) * activityPageSize, matches.length)} of ${matches.length}`;
+      if ($("activityPrevious")) $("activityPrevious").disabled = activityPage === 0;
+      if ($("activityNext")) $("activityNext").disabled = activityPage >= pages - 1;
+    }
+    function changeActivityPage(direction) {
+      activityPage = Math.max(0, activityPage + direction);
+      filterActivity(false);
+    }
+    async function knowledge() {
+      $content.innerHTML = `<article class="card"><div class="card-head"><div><h2>Telegram user memories</h2><p class="hint">Use the user's numeric Telegram ID. Saved memories become context for that user's future conversations.</p></div></div><form class="row" onsubmit="loadMemories(event)"><input id="memoryUser" class="field" type="number" min="1" placeholder="Telegram user ID" required><button class="btn" type="submit">Load memories</button></form><div id="memoryResults" class="list">${empty("Enter a Telegram user ID to view its saved memories.")}</div></article>`;
+    }
+    async function loadMemories(event) {
+      event.preventDefault();
+      const id = $("memoryUser").value;
+      const data = await api(`/memory/${encodeURIComponent(id)}`);
+      $("memoryResults").innerHTML = `<form class="row" onsubmit="saveMemory(event)"><input id="memoryText" class="field" maxlength="1000" placeholder="Add a saved memory…" required><button class="btn" type="submit">Save memory</button></form>${data.memories.length ? data.memories.map((item) => listItem(item.memory, `${item.category} · importance ${item.importance} · #${item.id}`, "", `<button class="btn danger small-btn" onclick="deleteMemory('${esc(id)}','${esc(item.id)}')">Delete</button>`)).join("") : empty("No saved memories for this user.")}`;
+    }
+    async function saveMemory(event) {
+      event.preventDefault();
+      const id = $("memoryUser").value;
+      await api(`/memory/${encodeURIComponent(id)}`, { method: "POST", body: JSON.stringify({ memory: $("memoryText").value, category: "general", importance: 3 }) });
+      await loadMemories({ preventDefault() {} });
+    }
+    async function deleteMemory(userId, memoryId) {
+      if (!confirm("Delete this saved memory?")) return;
+      await api(`/memory/${encodeURIComponent(userId)}/${encodeURIComponent(memoryId)}`, { method: "DELETE" });
+      await loadMemories({ preventDefault() {} });
+    }
+    const SETTINGS_SECTIONS = [
+      { id: "account", label: "Account & Security", icon: "◉", search: "login password recovery email security sessions" },
+      { id: "appearance", label: "Appearance & Branding", icon: "◐", search: "theme logo image brand appearance" },
+      { id: "models", label: "AI Providers & Models", icon: "✦", search: "provider model api key chat vision" },
+      { id: "personality", label: "AI Personality & Behavior", icon: "❋", search: "personality tone style length emoji instructions" },
+      { id: "community", label: "Community & Welcome Messages", icon: "✿", search: "telegram welcome members community replies" },
+      { id: "moderation", label: "Moderation & Link Protection", icon: "◇", search: "moderation trusted blocked links safety" },
+      { id: "platforms", label: "Telegram, Facebook, Instagram & WhatsApp", icon: "◈", search: "telegram facebook instagram whatsapp social integrations" },
+      { id: "publishing", label: "Content & Publishing", icon: "▤", search: "content publishing posts approval policies" },
+      { id: "automation", label: "Automation", icon: "⟳", search: "automation tasks schedules worker" },
+      { id: "notifications", label: "Notifications", icon: "♧", search: "notifications alerts email telegram" },
+      { id: "knowledge", label: "Memory & Knowledge Base", icon: "▣", search: "memory knowledge facts saved data" },
+      { id: "privacy", label: "Privacy & Data", icon: "⬡", search: "privacy data personal information retention" },
+      { id: "integrations", label: "Integrations & API", icon: "⌘", search: "integrations api credentials tokens" },
+      { id: "system", label: "System Health & Diagnostics", icon: "⌁", search: "system health diagnostics database cloudflare" },
+    ];
+    let settingsFeedback = "";
+    async function settings() {
+      const [account, providers, models, profile, behavior, community, integrations, tasks, policies, doctor] = await Promise.all([
+        api("/auth/account"), api("/ai/providers"), api("/ai/models"), api("/profile"),
+        api("/settings/assistant-behavior"), api("/community/settings"), api("/integrations"),
+        api("/tasks?limit=250"), api("/publishing/policies"), api("/system/doctor")
+      ]);
+      if (currentPage !== "settings") return;
+      if (profilePreviewUrl) URL.revokeObjectURL(profilePreviewUrl);
+      profilePreviewUrl = "";
+      settingsSnapshot = {
+        account, providers: providers.providers, models: models.models, profile,
+        behavior: behavior.settings, community: community.settings,
+        integrations: integrations.integrations, tasks: tasks.tasks, policies: policies.policies, doctor
+      };
+      if (!SETTINGS_SECTIONS.some((section) => section.id === settingsSection)) settingsSection = "account";
+      renderSettingsControlCenter();
+    }
+    function renderSettingsControlCenter() {
+      const data = settingsSnapshot;
+      const enabledProviders = data.providers.filter((item) => item.enabled).length;
+      const enabledModels = data.models.filter((item) => item.enabled).length;
+      const connectedIntegrations = data.integrations.filter((item) => item.enabled).length;
+      const activeTasks = data.tasks.filter((item) => item.enabled && ["Pending", "Scheduled", "Running"].includes(item.status)).length;
+      const selected = SETTINGS_SECTIONS.find((section) => section.id === settingsSection);
+      $content.innerHTML = `<div class="settings-control-center">
+        <section class="settings-overview"><div><div class="eyebrow">WORKSPACE CONTROL CENTER</div><h2>Settings, organized around your work</h2><p>Manage Nyamal's account, voice, AI, community, connected channels, and operations.</p></div>
+          <div class="settings-overview-stats"><div class="settings-stat"><strong>${enabledProviders}</strong><span>AI providers</span></div><div class="settings-stat"><strong>${enabledModels}</strong><span>Enabled models</span></div><div class="settings-stat"><strong>${connectedIntegrations}</strong><span>Connected channels</span></div><div class="settings-stat"><strong>${activeTasks}</strong><span>Active automations</span></div></div>
+        </section>
+        <div class="settings-layout">
+          <aside class="settings-navigation" aria-label="Settings categories"><h2>SETTINGS</h2>
+            <label class="field-label" for="settingsCategorySearch">Find a setting</label><input id="settingsCategorySearch" class="field" type="search" placeholder="Search categories…" oninput="filterSettingsSections()" autocomplete="off">
+            <nav class="settings-category-list" id="settingsCategoryList" aria-label="Settings sections">${SETTINGS_SECTIONS.map((section) => `<button type="button" class="settings-category ${section.id === settingsSection ? "active" : ""}" data-settings-id="${section.id}" data-settings-search="${esc(`${section.label} ${section.search}`.toLowerCase())}" aria-current="${section.id === settingsSection ? "page" : "false"}" onclick="setSettingsSection('${section.id}')"><span class="settings-category-icon" aria-hidden="true">${section.icon}</span><span>${section.label}</span></button>`).join("")}</nav>
+            <p class="settings-search-results" id="settingsSearchResults">14 settings areas</p>
+          </aside>
+          <section class="settings-panel" id="settingsPanel" aria-live="polite"></section>
+        </div>
+      </div>`;
+      renderSettingsPanel();
+    }
+    function filterSettingsSections() {
+      const query = $("settingsCategorySearch").value.trim().toLowerCase();
+      const buttons = [...$("settingsCategoryList").querySelectorAll("[data-settings-id]")];
+      let matches = 0;
+      buttons.forEach((button) => {
+        const visible = !query || button.dataset.settingsSearch.includes(query);
+        button.hidden = !visible;
+        if (visible) matches++;
+      });
+      $("settingsSearchResults").textContent = query ? `${matches} matching section${matches === 1 ? "" : "s"}` : "14 settings areas";
+    }
+    function setSettingsSection(sectionId) {
+      if (!SETTINGS_SECTIONS.some((section) => section.id === sectionId)) return;
+      settingsSection = sectionId;
+      updateNavigationState();
+      document.querySelectorAll("[data-settings-id]").forEach((button) => {
+        const active = button.dataset.settingsId === sectionId;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-current", active ? "page" : "false");
+      });
+      renderSettingsPanel();
+    }
+    function renderSettingsPanel() {
+      if (!settingsSnapshot) return;
+      const data = settingsSnapshot;
+      const panel = $("settingsPanel");
+      const heading = (title, description, status = "") => `<header class="settings-panel-title"><div><h2>${title}</h2><p>${description}</p></div>${status}</header>`;
+      const shortcut = (label, page, style = "secondary") => `<button class="btn ${style}" type="button" onclick="loadPage('${page}')">${label}</button>`;
+      const sectionNav = SETTINGS_SECTIONS.find((section) => section.id === settingsSection);
+      const community = data.community;
+      const activeIntegrations = data.integrations.filter((item) => item.enabled);
+      const statusText = data.doctor.status === "ok" ? "operational" : data.doctor.status;
+      const memoryText = "Memory controls are scoped to a Telegram user ID; workspace-wide memory export or deletion is not available in this deployment.";
+      switch (settingsSection) {
+        case "account":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Protect administrator access and keep recovery options current.", pill(data.account.email_verified ? "recovery verified" : "recovery needs setup"))}
+            <div class="notice ${data.account.email_delivery_configured ? "success" : "warning"}">${data.account.email_delivery_configured ? "Email delivery is configured. Verify your recovery address to enable password reset." : "Email recovery is not ready yet. Password changes remain available without email."}
+              ${data.account.email_delivery_configured ? "" : `<details class="advanced-options section"><summary>Show the email setup steps</summary><ol><li>Verify a sender domain with Resend.</li><li>Set the RESEND_API_KEY and NYAMAL_EMAIL_FROM Worker secrets using Wrangler.</li><li>Enter a recovery email below and follow the verification link.</li></ol><p class="hint">Never paste API keys into this dashboard, source code, or chat.</p></details>`}
+            </div><div class="grid two section">
+              <article class="settings-info"><strong>Recovery email</strong><p>Reset links are sent only to a verified address. Current state: ${esc(data.account.email_verified ? "verified" : data.account.email ? "unverified" : "not set")}.</p>
+                <form class="section" onsubmit="saveRecoveryEmail(event)"><label class="field-label" for="recoveryEmail">Email address</label><input id="recoveryEmail" class="field" type="email" autocomplete="email" value="${esc(data.account.email || "")}" required><button class="btn" type="submit">Save and send verification</button></form><p id="emailMessage" class="hint" aria-live="polite"></p>
+              </article>
+              <article class="settings-info"><strong>Password & active sessions</strong><p>Use at least ${data.account.minimum_password_length} characters. Changing your password signs out other sessions.</p>
+                <form class="section" onsubmit="changePassword(event)"><label class="field-label" for="currentPassword">Current password</label><input id="currentPassword" class="field" type="password" autocomplete="current-password" required>
+                <label class="field-label" for="newPassword">New password</label><input id="newPassword" class="field" type="password" autocomplete="new-password" minlength="${data.account.minimum_password_length}" required>
+                <label class="field-label" for="confirmPassword">Confirm new password</label><input id="confirmPassword" class="field" type="password" autocomplete="new-password" minlength="${data.account.minimum_password_length}" required>
+                <button class="btn" type="submit">Change password</button></form><p id="passwordMessage" class="hint" aria-live="polite"></p>
+              </article>
+            </div><details class="advanced-options"><summary>Security guidance</summary><p class="hint">Use a unique password. API credentials are managed in their integration forms and stored encrypted; this page never displays saved secrets.</p></details>
+          </article>`;
+          break;
+        case "appearance":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Choose a device-local theme and manage the logo shown on sign-in and in the sidebar.", pill(data.profile.photo_mime ? "custom logo" : "default icon"))}
+            <div class="settings-info-grid">
+              <div class="settings-info"><strong>Color theme</strong><p>Choose whether Nyamal follows your device or uses a fixed appearance. Current appearance: <b>${document.documentElement.dataset.theme === "light" ? "Light" : "Dark"}</b>.</p><label class="field-label" for="settingsThemePreference">Theme preference</label><select class="field" id="settingsThemePreference" onchange="setThemePreference(this.value)"><option value="system" ${getThemePreference() === "system" ? "selected" : ""}>System</option><option value="dark" ${getThemePreference() === "dark" ? "selected" : ""}>Dark</option><option value="light" ${getThemePreference() === "light" ? "selected" : ""}>Light</option></select><button class="btn ghost" type="button" onclick="resetAppearance()">Restore system default</button><p class="settings-save-status" role="status">Theme changes save on this device immediately.</p></div>
+              <div class="settings-info"><strong>Workspace logo</strong><p>PNG, JPEG, or WebP, up to 1 MB. Uploading replaces the shared workspace logo.</p><div class="profile-upload-row section"><img id="profilePreview" class="profile-preview ${data.profile.photo_mime ? "" : "hidden"}" alt="Current Nyamal logo"><span id="profileDefaultPreview" class="brand-mark profile-preview-fallback ${data.profile.photo_mime ? "hidden" : ""}" aria-hidden="true">✦</span><div><label class="field-label" for="profilePhotoFile">Choose logo image</label><input id="profilePhotoFile" class="field" type="file" accept="image/png,image/jpeg,image/webp" onchange="previewBrandLogo()"><button class="btn" type="button" onclick="uploadProfilePhoto()">Upload logo</button><button class="btn danger small-btn" type="button" onclick="removeProfilePhoto()">Restore default logo</button><p id="profilePhotoMessage" class="settings-save-status" aria-live="polite"></p></div></div></div>
+            </div></article>`;
+          if (data.profile.photo_mime) {
+            const preview = $("profilePreview");
+            preview.src = `/profile-photo?ts=${Date.now()}`;
+            preview.classList.remove("hidden");
+          }
+          break;
+        case "models":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Review configured providers and models. Open the AI workspace to add providers, discover models, set task routing, test connections, or enable/disable models.", pill(`${data.models.filter((item) => item.enabled).length} models enabled`))}
+            <div class="settings-info-grid"><div class="settings-info"><strong>AI providers</strong><p>${data.providers.length} saved · ${data.providers.filter((item) => item.enabled).length} enabled. Credentials are encrypted and never returned to the dashboard.</p></div><div class="settings-info"><strong>AI models</strong><p>${data.models.length} saved · ${data.models.filter((item) => item.enabled).length} enabled across chat and supported tasks.</p></div></div>
+            <div class="list section">${data.providers.length ? data.providers.map((provider) => listItem(provider.name, `${provider.kind} · ${provider.models} model(s) · priority ${provider.priority}`, pill(provider.enabled ? "enabled" : "disabled"))).join("") : empty("No AI providers are configured.")}</div>
+            <div class="settings-shortcuts">${shortcut("Manage providers & models", "ai")}</div></article>`;
+          break;
+        case "personality":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Set persistent voice preferences for AI chat and generated content. Core safety, privacy, and truthfulness requirements remain in effect.")}
+            <form class="form-grid" onsubmit="saveAssistantBehavior(event)">
+              <div><label class="field-label" for="assistantTone">Voice tone</label><select class="field" id="assistantTone">${[["warm","Warm"],["conversational","Conversational"],["professional","Professional"],["playful","Playful"]].map(([value,label]) => `<option value="${value}" ${data.behavior.tone === value ? "selected" : ""}>${label}</option>`).join("")}</select></div>
+              <div><label class="field-label" for="assistantResponseLength">Response detail</label><select class="field" id="assistantResponseLength">${[["concise","Concise"],["balanced","Balanced"],["detailed","Detailed"]].map(([value,label]) => `<option value="${value}" ${data.behavior.response_length === value ? "selected" : ""}>${label}</option>`).join("")}</select></div>
+              <div><label class="field-label" for="assistantEmojiUse">Emoji use</label><select class="field" id="assistantEmojiUse">${[["minimal","Minimal"],["moderate","Moderate"],["expressive","Expressive"]].map(([value,label]) => `<option value="${value}" ${data.behavior.emoji_use === value ? "selected" : ""}>${label}</option>`).join("")}</select></div>
+              <div class="wide"><label class="field-label" for="assistantCustomInstructions">Additional personality instructions</label><textarea class="field" id="assistantCustomInstructions" rows="6" maxlength="4000" placeholder="Describe the voice, communication habits, and preferences Nyamal should follow. Do not include secrets or private information.">${esc(data.behavior.custom_instructions)}</textarea><p class="hint">Up to 4,000 characters. These instructions are saved in D1 and applied to AI chat and generated task text.</p></div>
+              <div class="wide row"><button class="btn" type="submit">Save voice settings</button><button class="btn ghost" type="button" onclick="resetAssistantBehavior()">Restore Nyamal defaults</button><span id="assistantBehaviorSaveStatus" class="settings-save-status" role="status" aria-live="polite">${esc(settingsFeedback || "Saved")}</span></div>
+            </form><div class="settings-shortcuts">${shortcut("Configure AI models", "ai")}${shortcut("Configure community behavior", "community")}</div></article>`;
+          ["assistantTone", "assistantResponseLength", "assistantEmojiUse", "assistantCustomInstructions"].forEach((id) => {
+            $(id).addEventListener("input", markAssistantBehaviorDirty);
+            $(id).addEventListener("change", markAssistantBehaviorDirty);
+          });
+          break;
+        case "community":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Configure persistent Telegram welcome templates, join batching, member handling, reply autonomy, and approved community facts.", pill(community.welcome_enabled ? "welcomes enabled" : "welcomes disabled"))}
+            <div class="settings-info-grid"><div class="settings-info"><strong>Welcome messages</strong><p>${community.welcome_individual_enabled ? "Individual" : "No individual"} · ${community.welcome_collective_enabled ? "collective" : "no collective"} · ${community.welcome_batch_window_seconds} second batch window.</p></div><div class="settings-info"><strong>Community engagement</strong><p>Autonomy level ${community.autonomy_level} · Telegram group replies ${community.telegram_group_replies === "disabled" ? "disabled" : "mention-only"} · social replies ${community.social_auto_replies ? "enabled" : "disabled"}.</p></div></div>
+            <div class="settings-shortcuts">${shortcut("Open Community Manager", "community")}</div>
+          </article>`;
+          break;
+        case "moderation":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Manage trusted and blocked domains, link checks, deletion safeguards, and human review from the Community Manager.", pill(community.link_protection ? "link checks on" : "link checks off"))}
+            <div class="settings-info-grid"><div class="settings-info"><strong>Link protection</strong><p>${community.trusted_domains.length} trusted domain(s) · ${community.blocked_domains.length} blocked domain(s).</p></div><div class="settings-info"><strong>Automatic removal</strong><p>Exact blocked Telegram links are ${community.auto_delete_blocked_telegram_links ? "eligible for automatic deletion" : "not automatically deleted"}. Uncertain or sensitive cases stay in human review.</p></div></div>
+            <div class="settings-shortcuts">${shortcut("Review moderation settings", "community")}</div></article>`;
+          break;
+        case "platforms":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "View real connection states. Configure credentials, permissions, webhooks, and account settings in Social Media.", pill(`${activeIntegrations.length} connected`))}
+            <div class="list">${["telegram","facebook","instagram","whatsapp"].map((platform) => { const integration = data.integrations.find((item) => item.platform === platform); return listItem(platform[0].toUpperCase() + platform.slice(1), integration ? `${integration.name} · ${integration.status}` : "Not configured", pill(integration?.enabled ? "enabled" : "not connected")); }).join("")}</div>
+            <div class="settings-shortcuts">${shortcut("Manage social accounts", "social")}${shortcut("Open Telegram webhook & health", "system")}</div></article>`;
+          break;
+        case "publishing":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Create drafts in Content Studio and manage publishing rules and connected accounts in Social Media.", pill(`${data.policies.length} publishing rules`))}
+            <div class="list">${data.policies.length ? data.policies.map((item) => listItem(`${item.platform} · ${item.category}`, `${item.mode} · updated ${item.updated_at}`, pill(item.mode))).join("") : empty("No publishing policies are configured; existing manual approval behavior remains in effect.")}</div>
+            <div class="settings-shortcuts">${shortcut("Open Content Studio", "content")}${shortcut("Manage publishing rules", "social")}${shortcut("Review approvals", "approvals")}</div></article>`;
+          break;
+        case "automation":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Create and manage the Worker-supported scheduled reports and approved publishing tasks.", pill(`${activeTasks} active`))}
+            <div class="settings-info-grid"><div class="settings-info"><strong>Active or queued</strong><p>${activeTasks} enabled task(s) are pending, scheduled, or running.</p></div><div class="settings-info"><strong>Worker status</strong><p>Automation uses the scheduled Cloudflare Worker; it does not depend on this browser staying open.</p></div></div>
+            <div class="settings-shortcuts">${shortcut("Manage automations", "automation")}</div></article>`;
+          break;
+        case "notifications":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Review routing for community review alerts and system-generated notifications.")}
+            <div class="settings-info-grid">            <div class="settings-info"><strong>Community review alerts</strong><p>Administrator Telegram alerts are ${community.notify_admin ? "enabled" : "disabled"} in Community Manager. Delivery requires NYAMAL_OWNER_TELEGRAM_ID.</p></div><div class="settings-info"><strong>Email</strong><p>${data.account.email_delivery_configured ? "Email delivery is configured for account recovery." : "Email delivery is not configured. Recovery-email setup instructions are in Account & Security."}</p></div></div>
+            <div class="settings-shortcuts">${shortcut("Configure community alerts", "community")}<button class="btn secondary" type="button" onclick="setSettingsSection('account')">Review email recovery</button></div></article>`;
+          break;
+        case "knowledge":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Maintain verified community facts and review or delete individual Telegram-user memories.", pill("D1-backed"))}
+            <div class="settings-info-grid"><div class="settings-info"><strong>Community knowledge</strong><p>Verified FAQs and community rules are configured in Community Manager and can be used as approved answer context.</p></div><div class="settings-info"><strong>Personal memories</strong><p>${memoryText}</p></div></div>
+            <div class="settings-shortcuts">${shortcut("Open Knowledge Base", "knowledge")}${shortcut("Edit community facts", "community")}</div></article>`;
+          break;
+        case "privacy":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Review available privacy controls and their actual scope. No workspace-wide export or purge control is exposed unless the backend supports it.")}
+            <div class="settings-info-grid"><div class="settings-info"><strong>Saved conversation context</strong><p>Nyamal uses chat history and optional saved memories where configured. Telegram user memories can be reviewed and deleted individually.</p><div class="settings-shortcuts">${shortcut("Review user memories", "knowledge")}</div></div><div class="settings-info"><strong>Administrator security</strong><p>Password changes sign out other sessions. Provider and platform credentials are stored encrypted and are never displayed back.</p><div class="settings-shortcuts"><button class="btn secondary" type="button" onclick="setSettingsSection('account')">Review account security</button></div></div></div></article>`;
+          break;
+        case "integrations":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Configure connected social accounts and AI provider endpoints in their feature workspaces. Secret values are intentionally never displayed here.", pill(`${activeIntegrations.length} active connections`))}
+            <div class="list">${data.integrations.length ? data.integrations.map((item) => listItem(item.name, `${item.platform} · ${item.status} · updated ${item.updated_at}`, pill(item.enabled ? "enabled" : "disabled"))).join("") : empty("No external integrations are configured.")}</div>
+            <div class="settings-shortcuts">${shortcut("Manage platform integrations", "social")}${shortcut("Manage AI providers & API credentials", "ai")}</div></article>`;
+          break;
+        case "system":
+          panel.innerHTML = `<article class="card">${heading(sectionNav.label, "Live status from the Worker diagnostics endpoint.", pill(statusText))}
+            <div class="settings-info-grid"><div class="settings-info"><strong>Cloudflare Worker & database</strong><p>${esc(data.doctor.status)} · ${esc(data.doctor.storage)}</p></div><div class="settings-info"><strong>Account security</strong><p>Dashboard login ${data.doctor.admin_login_configured ? "configured" : "needs setup"} · credential encryption ${data.doctor.encryption_key_configured ? "configured" : "not configured"}.</p></div></div>
+            <div class="settings-shortcuts">${shortcut("Open full System Tools", "system")}</div></article>`;
+          break;
+        default:
+          panel.innerHTML = empty("Choose a settings area.");
+      }
+    }
+    function markAssistantBehaviorDirty() {
+      settingsFeedback = "Unsaved changes";
+      const status = $("assistantBehaviorSaveStatus");
+      if (status) status.textContent = settingsFeedback;
+    }
+    async function saveAssistantBehavior(event) {
+      event.preventDefault();
+      const status = $("assistantBehaviorSaveStatus");
+      status.textContent = "Saving…";
+      try {
+        const result = await api("/settings/assistant-behavior", { method: "PUT", body: JSON.stringify({
+          tone: $("assistantTone").value,
+          response_length: $("assistantResponseLength").value,
+          emoji_use: $("assistantEmojiUse").value,
+          custom_instructions: $("assistantCustomInstructions").value
+        }) });
+        settingsSnapshot.behavior = result.settings;
+        settingsFeedback = "Saved just now";
+        renderSettingsPanel();
+      } catch (error) {
+        status.textContent = `Save failed: ${error.message}`;
+      }
+    }
+    async function resetAssistantBehavior() {
+      if (!confirm("Restore the default Nyamal voice settings? This replaces the current custom voice preferences.")) return;
+      try {
+        const result = await api("/settings/assistant-behavior", { method: "PUT", body: JSON.stringify({
+          tone: "warm", response_length: "balanced", emoji_use: "moderate", custom_instructions: ""
+        }) });
+        settingsSnapshot.behavior = result.settings;
+        settingsFeedback = "Defaults restored and saved";
+        renderSettingsPanel();
+      } catch (error) {
+        $("assistantBehaviorSaveStatus").textContent = `Reset failed: ${error.message}`;
+      }
+    }
+    function resetAppearance() {
+      if (!confirm("Restore the system theme preference on this device?")) return;
+      setThemePreference("system");
+    }
+    async function uploadProfilePhoto() {
+      const file = $("profilePhotoFile").files?.[0];
+      if (!file) { $("profilePhotoMessage").textContent = "Choose a logo image first."; return; }
+      const validationMessage = validateBrandImage(file);
+      if (validationMessage) {
+        $("profilePhotoMessage").textContent = validationMessage;
+        return;
+      }
+      const form = new FormData();
+      form.append("photo", file);
+      try {
+        const response = await fetch("/v1/profile/photo", {
+          method: "POST", credentials: "same-origin", body: form
+        });
+        const data = await response.json().catch(() => ({ detail: response.statusText }));
+        if (!response.ok) throw new Error(data.detail || "Logo upload failed");
+        profilePhotoPromise = loadProfilePhoto();
+        await profilePhotoPromise;
+        await loadPage("settings");
+      } catch (error) {
+        $("profilePhotoMessage").textContent = error.message;
+      }
+    }
+    function validateBrandImage(file) {
+      if (file.size < 1 || file.size > 1024 * 1024) return "Choose an image that is no larger than 1 MB.";
+      if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) return "Use a PNG, JPEG, or WebP image.";
+      return "";
+    }
+    function previewBrandLogo() {
+      const file = $("profilePhotoFile").files?.[0];
+      if (!file) return;
+      const validationMessage = validateBrandImage(file);
+      if (validationMessage) {
+        $("profilePhotoMessage").textContent = validationMessage;
+        return;
+      }
+      if (profilePreviewUrl) URL.revokeObjectURL(profilePreviewUrl);
+      profilePreviewUrl = URL.createObjectURL(file);
+      $("profilePreview").src = profilePreviewUrl;
+      $("profilePreview").classList.remove("hidden");
+      $("profileDefaultPreview").classList.add("hidden");
+      $("profilePhotoMessage").textContent = "Preview only. Select Upload logo to save this image.";
+    }
+    async function removeProfilePhoto() {
+      if (!confirm("Remove the current logo and restore the default icon?")) return;
+      try {
+        await api("/profile/photo", { method: "DELETE" });
+        profilePhotoPromise = loadProfilePhoto();
+        await profilePhotoPromise;
+        await loadPage("settings");
+      } catch (error) {
+        $("profilePhotoMessage").textContent = error.message;
+      }
+    }
+    async function saveRecoveryEmail(event) {
+      event.preventDefault();
+      try {
+        const result = await api("/auth/email", { method: "POST", body: JSON.stringify({ email: $("recoveryEmail").value.trim() }) });
+        $("emailMessage").textContent = result.email_verified ? "This address is already verified." : "Verification email sent. Follow its link to enable password recovery.";
+      } catch (error) { $("emailMessage").textContent = error.message; }
+    }
+    async function changePassword(event) {
+      event.preventDefault();
+      if ($("newPassword").value !== $("confirmPassword").value) { $("passwordMessage").textContent = "The new passwords do not match."; return; }
+      try {
+        await api("/auth/password", { method: "POST", body: JSON.stringify({
+          current_password: $("currentPassword").value, new_password: $("newPassword").value
+        }) });
+        $("passwordMessage").textContent = "Password changed. Your other sessions have been signed out.";
+        $("currentPassword").value = $("newPassword").value = $("confirmPassword").value = "";
+      } catch (error) { $("passwordMessage").textContent = error.message; }
+    }
+    async function system() {
+      const [doctor, reports] = await Promise.all([api("/system/doctor"), api("/reports")]);
+      if (currentPage !== "system") return;
+      const rows = (reports.reports || []).map((report) => listItem(report.report_date, report.report_json, pill("saved"))).join("");
+      $content.innerHTML = `<section class="grid three"><article class="card"><span class="metric-label">Worker status</span><div class="metric">${esc(doctor.status)}</div><div class="metric-foot">${esc(doctor.storage)}</div></article><article class="card"><span class="metric-label">Dashboard login</span><div class="metric">${doctor.admin_login_configured ? "Ready" : "Needs setup"}</div><div class="metric-foot">Session-based authentication</div></article><article class="card"><span class="metric-label">Email recovery</span><div class="metric">${doctor.password_reset_email_configured ? "Ready" : "Not configured"}</div><div class="metric-foot">Resend API + verified sender</div></article></section>
+        <section class="grid two section"><article class="card"><div class="card-head"><div><h2>System diagnostics</h2><p class="hint">Live Worker and D1 configuration status.</p></div><button class="btn secondary small-btn" onclick="loadPage('system')">Refresh</button></div><div class="list">${listItem("Database", doctor.storage, pill("connected"))}${listItem("Dashboard login", doctor.admin_login_configured ? "Username and session secrets are configured." : "Login secrets need attention.", pill(doctor.admin_login_configured ? "ready" : "needs setup"))}${listItem("Password recovery", doctor.password_reset_email_configured ? "Email delivery is configured." : "Configure Resend and a verified sender domain.", pill(doctor.password_reset_email_configured ? "ready" : "not configured"))}${listItem("Credential encryption", doctor.encryption_key_configured ? "Integration secrets can be protected." : "Encryption key is not configured.", pill(doctor.encryption_key_configured ? "ready" : "not configured"))}</div><details class="advanced-options section"><summary>Technical details</summary><pre class="small">${esc(JSON.stringify(doctor, null, 2))}</pre></details></article>
+        <article class="card"><div class="card-head"><div><h2>Telegram webhook</h2><p class="hint">Set the Telegram webhook to this Worker endpoint.</p></div></div><p class="small">Updates are received at <code>/telegram/webhook</code>. Registering preserves Telegram's pending updates.</p><button class="btn" onclick="registerWebhook()">Register webhook</button><p id="webhookMessage" class="hint"></p><hr style="border-color:var(--line);border-style:solid;border-width:1px 0 0;margin:20px 0"><h3>D1 backup</h3><p class="hint">Backups are exported through Wrangler or the Cloudflare dashboard, not downloaded as SQLite from this Worker.</p><code class="small">npx wrangler d1 export nyamalbot-db --remote --output=nyamal-backup.sql</code></article></section>
+        <article class="card section"><div class="card-head"><div><h2>Daily reports</h2><p class="hint">Reports are generated from recorded task, content, and AI usage data.</p></div><button class="btn" onclick="generateReport()">Generate report</button></div><div class="list">${rows || empty("No reports have been generated.")}</div><p id="reportMessage" class="hint"></p></article>`;
+    }
+    async function registerWebhook() {
+      try { await api("/telegram/webhook", { method: "POST" }); $("webhookMessage").textContent = "Telegram webhook registered."; }
+      catch (error) { $("webhookMessage").textContent = error.message; }
+    }
+    async function generateReport() {
+      try { await api("/reports/generate", { method: "POST" }); await loadPage("system"); }
+      catch (error) { $("reportMessage").textContent = error.message; }
+    }
+    async function help() {
+      const health = await publicJson("/health");
+      if (currentPage !== "help") return;
+      $content.innerHTML = `<section class="grid two"><article class="card"><div class="card-head"><h2>About this deployment</h2>${pill(health.status)}</div><p class="hint">Nyamal runs as a Cloudflare Worker with D1 storage, Telegram webhooks, configured AI providers, and official platform adapters. The dashboard can only show information available from these connected systems.</p><div class="list">${listItem("AI chat", "Requires an enabled model assigned to the chat task type.")}${listItem("Community Manager", "Configure welcomes, safe replies, trusted links and human review in the Community Manager page.")}${listItem("Social messaging", "Meta inbox webhooks require app credentials, subscriptions and platform permissions.")}${listItem("Content publishing", "Requires platform credentials and uses the existing approval queue.")}${listItem("Automation", "The Free Worker executes supported bounded task types; it is not a persistent Python worker.")}</div></article>
+      <article class="card"><div class="card-head"><h2>Setup checklist</h2></div><ol class="hint"><li>Add at least one AI provider and enabled chat model in Nyamal AI.</li><li>Connect only the social platforms you have permission to manage.</li><li>Set welcome text, approved community facts, rules and reply mode in Community Manager.</li><li>Review flagged messages and response drafts there; configure NYAMAL_OWNER_TELEGRAM_ID for Telegram alerts.</li><li>Verify the recovery email under Settings after email delivery is configured.</li><li>Export a D1 backup regularly using Wrangler.</li></ol><button class="btn secondary" onclick="loadPage('community')">Open Community Manager</button><button class="btn secondary" onclick="loadPage('system')">Open system tools</button></article></section>`;
+    }
+    $("nav").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-page]");
+      if (button) navigateFromNav(button);
+    });
+    document.addEventListener("click", (event) => {
+      const pageButton = event.target.closest("[data-page]");
+      if (pageButton && !pageButton.closest("#nav")) navigateFromNav(pageButton);
+      if (event.target.closest("[data-action='new-content']")) $("newContent")?.scrollIntoView({ behavior: "smooth" });
+    });
+    $("mobileMenu").addEventListener("click", () => $("sidebar").classList.toggle("open"));
+    $("sidebarCollapse").addEventListener("click", () => {
+      const collapsed = $("app").classList.toggle("sidebar-collapsed");
+      localStorage.setItem("nyamal-sidebar-collapsed", String(collapsed));
+      $("sidebarCollapse").setAttribute("aria-expanded", String(!collapsed));
+      $("sidebarCollapse").setAttribute("aria-label", collapsed ? "Expand navigation" : "Collapse navigation");
+      $("sidebarCollapse").title = collapsed ? "Expand navigation" : "Collapse navigation";
+    });
+    function getThemePreference() {
+      const preference = localStorage.getItem("nyamal-theme");
+      return ["system", "dark", "light"].includes(preference) ? preference : "system";
+    }
+    function setThemePreference(preference) {
+      if (!["system", "dark", "light"].includes(preference)) return;
+      localStorage.setItem("nyamal-theme", preference);
+      const resolved = preference === "system"
+        ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : preference;
+      document.documentElement.dataset.theme = resolved;
+      document.documentElement.dataset.themePreference = preference;
+      const icon = preference === "system" ? "◐" : preference === "light" ? "☾" : "☼";
+      const label = `Theme: ${preference[0].toUpperCase()}${preference.slice(1)}`;
+      $("themeToggle").textContent = icon;
+      $("themeToggle").setAttribute("aria-label", `${label}. Activate to change theme.`);
+      $("themeToggle").title = `${label} · Activate to change`;
+      const selector = $("settingsThemePreference");
+      if (selector) selector.value = preference;
+    }
+    function toggleTheme() {
+      const next = { system: "light", light: "dark", dark: "system" }[getThemePreference()];
+      setThemePreference(next);
+    }
+    $("themeToggle").addEventListener("click", toggleTheme);
+    function restoreDisplayPreferences() {
+      setThemePreference(getThemePreference());
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+      const updateSystemTheme = () => {
+        if (getThemePreference() === "system") setThemePreference("system");
+      };
+      if (systemTheme.addEventListener) systemTheme.addEventListener("change", updateSystemTheme);
+      else if (systemTheme.addListener) systemTheme.addListener(updateSystemTheme);
+      const collapsed = localStorage.getItem("nyamal-sidebar-collapsed") === "true";
+      $("app").classList.toggle("sidebar-collapsed", collapsed);
+      $("sidebarCollapse").setAttribute("aria-expanded", String(!collapsed));
+    }
+    $("globalSearch").addEventListener("input", (event) => { searchQuery = event.target.value; applySearch(); });
+    document.addEventListener("keydown", (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault(); $("globalSearch").focus();
+      }
+      if (event.key === "Escape") $("sidebar").classList.remove("open");
+    });
+    async function restoreSession() {
+      const hash = new URLSearchParams(location.hash.slice(1));
+      const verify = hash.get("verify");
+      const reset = hash.get("reset");
+      if (reset) {
+        history.replaceState(null, "", location.pathname);
+        resetToken = reset;
+        $("loginScreen").classList.remove("hidden");
+        $("loginForm").classList.add("hidden");
+        $("resetForm").classList.remove("hidden");
+        return;
+      }
+      if (verify) {
+        history.replaceState(null, "", location.pathname);
+        try {
+          await api("/auth/email/verify", { method: "POST", body: JSON.stringify({ token: verify }) });
+          showLogin("Recovery email verified. You can now request a password reset.");
+        } catch (error) { showLogin(error.message); }
+        return;
+      }
+      try {
+        const session = await api("/auth/session");
+        if (session.ok) await showDashboard();
+      } catch (error) {
+        console.error("Could not restore dashboard session", error);
+      }
+    }
+    restoreDisplayPreferences();
+    profilePhotoPromise = loadProfilePhoto();
+    restoreSession();
+  </script>
+</body>
+</html>
